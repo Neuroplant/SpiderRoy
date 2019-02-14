@@ -226,12 +226,153 @@ void BeinPos(int bein, int input) {
 		break;
 		
 	}
-	Servo[bein*3+0].neu =	map(joint0,0,2,Servo[bein*3+0].min,Servo[bein*3+0].max;
-	Servo[bein*3+1].neu =   map(joint1,0,2,Servo[bein*3+1].min,Servo[bein*3+1].max;
-	Servo[bein*3+2].neu =   map(joint2,0,2,Servo[bein*3+2].min,Servo[bein*3+2].max;
+	Servo[bein*3+0].neu =	map(joint0,0,2,Servo[bein*3+0].min,Servo[bein*3+0].max);
+	Servo[bein*3+1].neu =   map(joint1,0,2,Servo[bein*3+1].min,Servo[bein*3+1].max);
+	Servo[bein*3+2].neu =   map(joint2,0,2,Servo[bein*3+2].min,Servo[bein*3+2].max);
 }
 
+int move(int leg, int pos) {
+	switch (pos) {
+	case 0 :	//stomp
+	break;
+	case 1 :	//setze fuß vor
+	beinPos(leg, 8);
+	beinPos(leg, 7);
+	beinPos(leg, 4);
+	break;
+	case 2 :	//setze fuß zurück
+	beinPos(leg, 8);
+	beinPos(leg, 9);
+	beinPos(leg, 6);
+	break;
+	case 3 :	//ziehe fuß zur mitte
+	beinPos(leg, 5);
+	break;
+	default :
+	break;
+	}
+	return 0;
+}
 
+int step (int dir) {
+	switch (dir) {
+	case 0 :	//stillstand
+	WaitFor(allmoveCompleted);
+	break;
+	case 1 :	//a Schritt vor
+	move(1,1);
+	move(4,1);
+	move(5,1);
+	beinPos(2,8);
+	beinPos(3,8);
+	beinPos(6,8);
+	WaitFor(allmoveCompleted);
+	move(1,3);
+	move(4,3);
+	move(5,3);
+	case 2 :	//b Schritt vor
+	move(2,1);
+	move(3,1);
+	move(6,1);
+	beinPos(1,8);
+	beinPos(4,8);
+	beinPos(5,8);
+	WaitFor(allmoveCompleted);
+	move(2,3);
+	move(3,3);
+	move(6,3);
+	break;
+	case 3 :	//a schritt zurück
+	move(1,2);
+	move(4,2);
+	move(5,2);
+	beinPos(2,8);
+	beinPos(3,8);
+	beinPos(6,8);
+	WaitFor(allmoveCompleted);
+	move(1,3);
+	move(4,3);
+	move(5,3);
+	break;
+	case 4 :	//b schritt zurück
+	move(2,2);
+	move(3,2);
+	move(6,2);
+	beinPos(1,8);
+	beinPos(4,8);
+	beinPos(5,8);
+	WaitFor(allmoveCompleted);
+	move(2,3);
+	move(3,3);
+	move(6,3);
+	case 5 :	//a drehe rechts
+	move(1,1);
+	move(4,2);
+	move(5,1);
+	beinPos(2,8);
+	beinPos(3,8);
+	beinPos(6,8);
+	WaitFor(allmoveCompleted);
+	move(1,3);
+	move(4,3);
+	move(5,3);
+	break;
+	case 6 :	//b drehe rechts
+	move(2,2);
+	move(3,1);
+	move(6,2);
+	beinPos(1,8);
+	beinPos(4,8);
+	beinPos(5,8);
+	WaitFor(allmoveCompleted);
+	move(2,3);
+	move(3,3);
+	move(6,3);
+	break;
+	case 7 :	//a drehe links
+	move(1,2);
+	move(4,1);
+	move(5,2);
+	beinPos(2,8);
+	beinPos(3,8);
+	beinPos(6,8);
+	WaitFor(allmoveCompleted);
+	move(1,3);
+	move(4,3);
+	move(5,3);
+	break;
+	case 8 :	//b drehe links
+	move(2,1);
+	move(3,2);
+	move(6,1);
+	beinPos(1,8);
+	beinPos(4,8);
+	beinPos(5,8);
+	WaitFor(allmoveCompleted);
+	move(2,3);
+	move(3,3);
+	move(6,3);
+	case 9 :	//a stomp
+	for (i=1;i<=6;i++){ 
+	        BeinPos(i,11);
+	        WaitFor(legmoveCompleted(i));
+	        BeinPos(i,5);
+	        WaitFor(legmoveCompleted(i));
+	    }
+	break;
+	case 10:	//b stomp
+	for (i=6;i<=1;i--){ 
+	        BeinPos(i,11);
+	        WaitFor(legmoveCompleted(i));
+	        BeinPos(i,5);
+	        WaitFor(legmoveCompleted(i));
+	    }
+	break;
+	default:
+	
+	}
+	return 0;
+}
 
 void main() {
 	//setup
