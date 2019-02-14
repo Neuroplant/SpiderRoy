@@ -1,0 +1,237 @@
+// SpiderRoy
+// V0.00.1
+#include <string.h>
+#include "pca9685.h"
+#include <wiringPi.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+#define SLOWMO 		100		// Bewegungsgeschwindigkeit
+/*
+	ServoNr	BeinNr	JointNr
+	0		0		0
+	1		0		1
+	2		0		2
+	3		1		0
+	4		1		1
+	5		1		2
+	6		2		0
+	7		2		1
+	8		2		2
+	9		3		0
+	10		3		1
+	11		3		2
+	12		4		0
+	13		4		1
+	14		4		2
+	15		5		0
+	16		5		1
+	17		5		2
+	18		6		0
+	19		6		1
+	20		6		2
+	
+	ServoNr = BeinNr*3 + JointNr
+	
+	BeinSchema:
+	
+			0
+		1		2
+		3		4
+		5		6
+		
+	JointSchema:
+		01
+			2
+*/
+struct s_Servo {
+    int Pin;
+    int min;
+    int max;
+    int alt;
+    int neu
+}
+
+struct s_Servo Servo[20];
+
+
+pthread_t ServoNr[20];
+int run=0;
+
+void WaitFor(int input) {
+    while (input != 0) delay(SLOMO);
+    return NULL;
+}
+
+int scaledpos(int nummer, int pos) {
+    
+    return pos;
+}
+
+*void ServoThread (void *arg) {
+	int pwm;
+	pthread_t id = pthread_self();
+	int idNr = 0;
+	while (not pthread_equal(id,ServoNr[idNr]) idNr++;	
+	
+	
+	while (run==0) {
+
+		if (Servo[idNr].alt < Servo[idNr].neu) {
+			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
+				WritePWM(ServoPin[idNr],pwm);
+				delay(SLOWMO);
+			}
+		}
+		if (Servo[idNr].alt > Servo[idNr].neu) {
+			for	(pwm = Servo[idNr].alt;pwm > Servo[idNr].neu;pwm--) {
+				WritePWM(Servo[idNr].pin,pwm);
+				delay(SLOWMO);
+			}
+		}
+	}
+    Servo[idNr].alt=Servo[idNr].neu;
+    WritePWM(Servo[idNr].pin,Servo[idNr].neu);
+
+	
+	}	
+	return NULL;
+}
+
+int legmoveCompleted(int leg) {
+   int i, count = 0;
+    for (i=0;i<=2;i++) {
+        count = count + abs(ServoPos[i,0]) - abs(ServoPos[i,1]);
+    }
+    return count;
+}
+
+int allmoveCompleted() {
+    int i, count = 0;
+    for (i=0;i<=7;i++) {
+        count = count + legmoveCompleted(i);
+    }
+    return count;
+}
+
+void BeinPos(int bein, int input) {
+    int joint1,joint2,joint3;
+	switch (input) {
+		case : 0 // halte Position
+		break;
+		case : 1 // unten vorne stand
+		joint1 = 1;
+		joint2 = 1;
+		joint3 = 2;
+		break;
+		case : 2 // unten mitte stand
+		joint1 = 2;
+		joint2 = 1;
+		joint3 = 2;
+		break;
+		case : 3 // unten hinten stand
+		joint1 = 3;
+		joint2 = 1;
+		joint3 = 2;
+		break;
+		case : 4 // mitte vorne stand
+		joint1 = 1;
+		joint2 = 2;
+		joint3 = 2;
+		break;
+		case : 5 // mitte mitte stand
+		joint1 = 2;
+		joint2 = 2;
+		joint3 = 2;
+		break;
+		case : 6 // mitte hinten stand
+		joint1 = 3;
+		joint2 = 2;
+		joint3 = 2;
+		break; 
+		case : 7 // oben vorne stand
+		joint1 = 1;
+		joint2 = 3;
+		joint3 = 2;
+		break;
+		case : 8 // oben mitte stand
+		joint1 = 2;
+		joint2 = 3;
+		joint3 = 2;
+		break;
+		case : 9 // oben hinten stand
+		joint1 = 3;
+		joint3 = 2;
+		break;
+		case : 10 // oben vorne gestreckt
+		joint1 = 1;
+		joint2 = 3;
+		joint3 = 1;
+		break;
+		case : 11 // oben mitte gestreckt
+		joint1 = 2;
+		joint2 = 3;
+		joint3 = 1;
+		break;
+		case : 12 // oben hinten gestreckt
+		joint1 = 3;
+		joint2 = 3;
+		joint3 = 1;
+		break;
+		case : 13 // unten vorne eingerollt
+		joint1 = 1;
+		joint2 = 1;
+		joint3 = 3;
+		break;
+		case : 14 // unten mitte eingerollt
+		joint1 = 2;
+		joint2 = 1;
+		joint3 = 3;
+		break;
+		case : 15 // unten hinten eingerollt
+		joint1 = 3;
+		joint2 = 1;
+		joint3 = 3;
+		break;
+		default // halte Position
+		break;
+		
+	}
+	Servo[bein*3+1].neu = (joint1-1)*10;
+	Servo[bein*3+2].neu = (joint2-1)*10;
+	Servo[bein*3+3].neu = (joint3-1)*10;
+}
+
+
+
+void main() {
+	//setup
+	int i;
+	for (i=0;i<20;i++) {
+		pthread_create(&(ServoNr[i],NULL,&ServoThread,NULL);
+	}
+		
+	//loop
+	while (run==0){
+	    //stand up
+	    for (i=1;i<=6;i++) BeinPos(i,5);
+	    WaitFor(allmoveCompleted());
+	    
+	    //stomp
+	    for (i=1;i<=6;i++){ 
+	        BeinPos(i,11);
+	        WaitFor(legmoveCompleted(i));
+	        BeinPos(i,5);
+	        WaitFor(legmoveCompleted(i));
+	    }
+	    WaitFor(allmoveCompleted());
+	    
+	    //sit down
+	    for (i=1;i<=6;i++) BeinPos(i,8);
+	    WaitFor(allmoveCompleted());
+	    
+	    
+	}
+}
