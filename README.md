@@ -1,7 +1,8 @@
 # SpiderRoy
 self made Hexapod
 
-#ServoNr	BeinNr	JointNr
+#	ServoNr		BeinNr		JointNr
+
 	0		0		0
 	1		0		1
 	2		0		2
