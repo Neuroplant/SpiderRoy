@@ -6,46 +6,111 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
 #define SLOWMO 		100		// Bewegungsgeschwindigkeit
 
 struct s_Servo {
-    int Pin;
+    int pin;
     int min;
     int max;
     int alt;
-    int neu
+    int neu;
+}
+struct s_Servo Servo[20];
+pthread_t t_Servo[20];
+
+int run=0;
+long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
+    return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow;
 }
 
-struct s_Servo Servo[20];
-
-
-pthread_t ServoNr[20];
-int run=0;
+void setupServos() {
+	int i;
+	
+	Servo[0].pin	=	;
+	Servo[1].pin	=	;
+	Servo[2].pin	=	;
+	Servo[3].pin	=	;
+	Servo[4].pin	=	;
+	Servo[5].pin	=	;
+	Servo[6].pin	=	;
+	Servo[7].pin	=	;
+	Servo[8].pin	=	;
+	Servo[9].pin	=	;
+	Servo[10].pin	=	;
+	Servo[11].pin	=	;
+	Servo[12].pin	=	;
+	Servo[13].pin	=	;
+	Servo[14].pin	=	;
+	Servo[15].pin	=	;
+	Servo[16].pin	=	;
+	Servo[17].pin	=	;
+	Servo[18].pin	=	;
+	Servo[19].pin	=	;
+	
+	Servo[0].min	=	;
+	Servo[0].max	=	;
+	Servo[1].min	=	;
+	Servo[1].max	=	;
+	Servo[2].min	=	;
+	Servo[2].max	=	;
+	Servo[3].min	=	;
+	Servo[3].max	=	;
+	Servo[4].min	=	;
+	Servo[4].max	=	;
+	Servo[5].min	=	;
+	Servo[5].max	=	;
+	Servo[6].min	=	;
+	Servo[6].max	=	;
+	Servo[7].min	=	;
+	Servo[7].max	=	;
+	Servo[8].min	=	;
+	Servo[8].max	=	;
+	Servo[9].min	=	;
+	Servo[9].max	=	;
+	Servo[10].min	=	;
+	Servo[10].max	=	;
+	Servo[11].min	=	;
+	Servo[11].max	=	;
+	Servo[12].min	=	;
+	Servo[12].max	=	;
+	Servo[13].min	=	;
+	Servo[13].max	=	;
+	Servo[14].min	=	;
+	Servo[14].max	=	;
+	Servo[15].min	=	;
+	Servo[15].max	=	;
+	Servo[16].min	=	;
+	Servo[16].max	=	;
+	Servo[17].min	=	;
+	Servo[17].max	=	;
+	Servo[18].min	=	;
+	Servo[18].max	=	;
+	Servo[19].min	=	;
+	Servo[19].max	=	;
+	
+	for (i=1;i<=6;i++) {
+	beinPos(i,5);
+	}
+	
+}
 
 void WaitFor(int input) {
     while (input != 0) delay(SLOMO);
     return NULL;
 }
 
-int scaledpos(int nummer, int pos) {
-    
-    return pos;
-}
-
 *void ServoThread (void *arg) {
 	int pwm;
 	pthread_t id = pthread_self();
 	int idNr = 0;
-	while (not pthread_equal(id,ServoNr[idNr]) idNr++;	
+	while (not pthread_equal(id,ServoNr[idNr]) idNr++;	//find idNr of this task
 	
 	
 	while (run==0) {
 
 		if (Servo[idNr].alt < Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
-				WritePWM(ServoPin[idNr],pwm);
+				WritePWM(Servo[idNr].pin,pwm);
 				delay(SLOWMO);
 			}
 		}
@@ -55,12 +120,9 @@ int scaledpos(int nummer, int pos) {
 				delay(SLOWMO);
 			}
 		}
+	   	Servo[idNr].alt=Servo[idNr].neu;
+    		WritePWM(Servo[idNr].pin,Servo[idNr].neu);
 	}
-    Servo[idNr].alt=Servo[idNr].neu;
-    WritePWM(Servo[idNr].pin,Servo[idNr].neu);
-
-	
-	}	
 	return NULL;
 }
 
@@ -86,86 +148,87 @@ void BeinPos(int bein, int input) {
 		case : 0 // halte Position
 		break;
 		case : 1 // unten vorne stand
-		joint1 = 1;
-		joint2 = 1;
-		joint3 = 2;
+		joint1 = 0;
+		joint2 = 0;
+		joint3 = 1;
 		break;
 		case : 2 // unten mitte stand
-		joint1 = 2;
-		joint2 = 1;
-		joint3 = 2;
+		joint1 = 1;
+		joint2 = 0;
+		joint3 = 1;
 		break;
 		case : 3 // unten hinten stand
-		joint1 = 3;
-		joint2 = 1;
-		joint3 = 2;
+		joint1 = 2;
+		joint2 = 0;
+		joint3 = 1;
 		break;
 		case : 4 // mitte vorne stand
-		joint1 = 1;
-		joint2 = 2;
-		joint3 = 2;
+		joint1 = 0;
+		joint2 = 1;
+		joint3 = 1;
 		break;
 		case : 5 // mitte mitte stand
-		joint1 = 2;
-		joint2 = 2;
-		joint3 = 2;
+		joint1 = 1;
+		joint2 = 1;
+		joint3 = 1;
 		break;
 		case : 6 // mitte hinten stand
-		joint1 = 3;
-		joint2 = 2;
-		joint3 = 2;
+		joint0 = 2;
+		joint1 = 1;
+		joint2 = 1;
 		break; 
 		case : 7 // oben vorne stand
-		joint1 = 1;
-		joint2 = 3;
-		joint3 = 2;
+		joint0 = 0;
+		joint1 = 2;
+		joint2 = 1;
 		break;
 		case : 8 // oben mitte stand
+		joint0 = 1;
 		joint1 = 2;
-		joint2 = 3;
-		joint3 = 2;
+		joint2 = 1;
 		break;
 		case : 9 // oben hinten stand
-		joint1 = 3;
-		joint3 = 2;
+		joint0 = 2;
+		joint1 = 2
+		joint2 = 1;
 		break;
 		case : 10 // oben vorne gestreckt
-		joint1 = 1;
-		joint2 = 3;
-		joint3 = 1;
+		joint0 = 0;
+		joint1 = 2;
+		joint2 = 0;
 		break;
 		case : 11 // oben mitte gestreckt
+		joint0 = 1;
 		joint1 = 2;
-		joint2 = 3;
-		joint3 = 1;
+		joint2 = 0;
 		break;
 		case : 12 // oben hinten gestreckt
-		joint1 = 3;
-		joint2 = 3;
-		joint3 = 1;
+		joint0 = 2;
+		joint1 = 2;
+		joint2 = 0;
 		break;
 		case : 13 // unten vorne eingerollt
-		joint1 = 1;
-		joint2 = 1;
-		joint3 = 3;
+		joint0 = 0;
+		joint1 = 0;
+		joint2 = 2;
 		break;
 		case : 14 // unten mitte eingerollt
-		joint1 = 2;
-		joint2 = 1;
-		joint3 = 3;
+		joint0 = 1;
+		joint1 = 0;
+		joint2 = 2;
 		break;
 		case : 15 // unten hinten eingerollt
-		joint1 = 3;
-		joint2 = 1;
-		joint3 = 3;
+		joint0 = 2;
+		joint1 = 0;
+		joint2 = 2;
 		break;
 		default // halte Position
 		break;
 		
 	}
-	Servo[bein*3+1].neu = (joint1-1)*10;
-	Servo[bein*3+2].neu = (joint2-1)*10;
-	Servo[bein*3+3].neu = (joint3-1)*10;
+	Servo[bein*3+0].neu =	map(joint0,0,2,Servo[bein*3+0].min,Servo[bein*3+0].max;
+	Servo[bein*3+1].neu =   map(joint1,0,2,Servo[bein*3+1].min,Servo[bein*3+1].max;
+	Servo[bein*3+2].neu =   map(joint2,0,2,Servo[bein*3+2].min,Servo[bein*3+2].max;
 }
 
 
@@ -173,8 +236,9 @@ void BeinPos(int bein, int input) {
 void main() {
 	//setup
 	int i;
+	setupServos();
 	for (i=0;i<20;i++) {
-		pthread_create(&(ServoNr[i],NULL,&ServoThread,NULL);
+		pthread_create(&(t_Servo[i],NULL,&ServoThread,NULL);
 	}
 		
 	//loop
