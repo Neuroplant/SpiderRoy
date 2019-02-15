@@ -6,6 +6,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define I2CDEVID0	0x40	//use 
+#define PIN_BASE0 	300
+#define I2CDEVID1	0x41
+#define PIN_BASE1	320
+
+#define MAX_PWM 	4096
+#define HERTZ 		50
+
 #define SLOWMO 		100		// Bewegungsgeschwindigkeit
 
 struct s_Servo {
@@ -377,6 +385,20 @@ int step (int dir) {
 void main() {
 	//setup
 	int i;
+	int fd0 = pca9685Setup(PIN_BASE0, I2CDEVID0, HERTZ);
+	if (fd0 < 0){
+		printf("Error in setup\n");
+		return fd0;
+	}
+	int fd1 = pca9685Setup(PIN_BASE1, I2CDEVID1, HERTZ);
+	if (fd1 < 0){
+		printf("Error in setup\n");
+		return fd1;
+	}
+	// Reset all output
+	pca9685PWMReset(fd0);
+	pca9685PWMReset(fd1);
+	
 	setupServos();
 	for (i=0;i<20;i++) {
 		pthread_create(&(t_Servo[i],NULL,&ServoThread,NULL);
