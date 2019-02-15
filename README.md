@@ -1,4 +1,4 @@
-# SpiderRoy
+I## SpiderRoy
 self made Hexapod
 
 #	ServoNr		BeinNr		JointNr
@@ -41,3 +41,7 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
   1 - Schulter  hoch/runter
   2 . Knie      rein/raus
 
+# Install
+Prerequisites:
+	https://github.com/Reinbert/pca9685
+	...
