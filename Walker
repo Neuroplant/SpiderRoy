@@ -1,14 +1,18 @@
 // SpiderRoy
 // V0.00.1
+//gcc RemoteCarIC.c -o Remote -lwiringPi -lm -lpthread 
+//(will create a makefile as soon as I figure out how)
+
 #include <string.h>
 #include "pca9685.h"
 #include <wiringPi.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 
-#define I2CDEVID0	0x40	//use 
+#define I2CDEVID0	0x40		//use "gpio i2cdetect" get Address
 #define PIN_BASE0 	300
-#define I2CDEVID1	0x41
+#define I2CDEVID1	0x41		//use "gpio i2cdetect" get Address
 #define PIN_BASE1	320
 
 #define MAX_PWM 	4096
@@ -31,8 +35,8 @@ long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
     return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow;
 }
 
-void setupServos() {
-	int i;
+void setupServos() {			//take a look at "https://github.com/Reinbert/pca9685/blob/master/examples/calibrate.c"
+	int i;				//to get all the data for this section
 	
 	Servo[0].pin	=	;
 	Servo[1].pin	=	;
@@ -240,144 +244,217 @@ void BeinPos(int bein, int input) {
 }
 
 int move(int leg, int pos) {
+	int i;
+	
 	switch (pos) {
-	case 0 :	//stomp
+	case 0 :	
+		
 	break;
 	case 1 :	//setze fuß vor
-	beinPos(leg, 8);
-	beinPos(leg, 7);
-	beinPos(leg, 4);
+		beinPos(leg, 8);
+		beinPos(leg, 7);
+		beinPos(leg, 4);
 	break;
 	case 2 :	//setze fuß zurück
-	beinPos(leg, 8);
-	beinPos(leg, 9);
-	beinPos(leg, 6);
+		beinPos(leg, 8);
+		beinPos(leg, 9);
+		beinPos(leg, 6);
 	break;
 	case 3 :	//ziehe fuß zur mitte
-	beinPos(leg, 5);
+		beinPos(leg, 5);
+	break;
+	case 4 :	//hebe Fuß
+		beinPos(leg, 8);
+	break;
+	
+	//Idle/Dance Moves
+	
+	case 10 :	//a stomp
+		for (i=1;i<=6;i++){ 
+	        	BeinPos(i,11);
+	        	WaitFor(legmoveCompleted(i));
+	        	BeinPos(i,5);
+	        	WaitFor(legmoveCompleted(i));
+	    	}
+	break;
+	case 11:	//b stomp
+		for (i=6;i<=1;i--){ 
+	        	BeinPos(i,11);
+	        	WaitFor(legmoveCompleted(i));
+	        	BeinPos(i,5);
+	        	WaitFor(legmoveCompleted(i));
+	    	}
+	break;
+	case 12: 	//Räkeln
+		for (i=6;i<=1;i--){ 
+		        BeinPos(i,14);
+		        WaitFor(legmoveCompleted(i));
+			BeinPos(i,10);
+			WaitFor(legmoveCompleted(i));
+			BeinPos(i,12);
+			WaitFor(legmoveCompleted(i));
+		        BeinPos(i,5);
+		        WaitFor(legmoveCompleted(i));
+		}
+	break;
+	case 12 :	//schunkeln
+		Step(0);
+		BeinPos(1,0);
+		BeinPos(2,1);
+		BeinPos(3,1);
+		BeinPos(4,1);
+		BeinPos(5,1);
+		BeinPos(6,2);
+		WaitFor(allmoveCompleted);
+		BeinPos(1,1);
+		BeinPos(2,2);
+		BeinPos(3,1);
+		BeinPos(4,1);
+		BeinPos(5,0);
+		BeinPos(6,1);
+		WaitFor(allmoveCompleted);
+		BeinPos(1,1);
+		BeinPos(2,1);
+		BeinPos(3,2);
+		BeinPos(4,0);
+		BeinPos(5,1);
+		BeinPos(6,1);
+		WaitFor(allmoveCompleted);
+		BeinPos(1,2);
+		BeinPos(2,1);
+		BeinPos(3,1);
+		BeinPos(4,1);
+		BeinPos(5,1);
+		BeinPos(6,0);
+		WaitFor(allmoveCompleted);
+		BeinPos(1,1);
+		BeinPos(2,2);
+		BeinPos(3,1);
+		BeinPos(4,1);
+		BeinPos(5,0);
+		BeinPos(6,1);
+		WaitFor(allmoveCompleted);
+		BeinPos(1,1);
+		BeinPos(2,1);
+		BeinPos(3,0);
+		BeinPos(4,2);
+		BeinPos(5,1);
+		BeinPos(6,1);
+		WaitFor(allmoveCompleted);
 	break;
 	default :
-	break;
 	}
 	return 0;
 }
 
 int step (int dir) {
 	switch (dir) {
-	case 0 :	//stillstand
-	WaitFor(allmoveCompleted);
-	break;
-	case 1 :	//a Schritt vor
-	move(1,1);
-	move(4,1);
-	move(5,1);
-	beinPos(2,8);
-	beinPos(3,8);
-	beinPos(6,8);
-	WaitFor(allmoveCompleted);
-	move(1,3);
-	move(4,3);
-	move(5,3);
-	case 2 :	//b Schritt vor
-	move(2,1);
-	move(3,1);
-	move(6,1);
-	beinPos(1,8);
-	beinPos(4,8);
-	beinPos(5,8);
-	WaitFor(allmoveCompleted);
-	move(2,3);
-	move(3,3);
-	move(6,3);
-	break;
-	case 3 :	//a schritt zurück
-	move(1,2);
-	move(4,2);
-	move(5,2);
-	beinPos(2,8);
-	beinPos(3,8);
-	beinPos(6,8);
-	WaitFor(allmoveCompleted);
-	move(1,3);
-	move(4,3);
-	move(5,3);
-	break;
-	case 4 :	//b schritt zurück
-	move(2,2);
-	move(3,2);
-	move(6,2);
-	beinPos(1,8);
-	beinPos(4,8);
-	beinPos(5,8);
-	WaitFor(allmoveCompleted);
-	move(2,3);
-	move(3,3);
-	move(6,3);
-	case 5 :	//a drehe rechts
-	move(1,1);
-	move(4,2);
-	move(5,1);
-	beinPos(2,8);
-	beinPos(3,8);
-	beinPos(6,8);
-	WaitFor(allmoveCompleted);
-	move(1,3);
-	move(4,3);
-	move(5,3);
-	break;
-	case 6 :	//b drehe rechts
-	move(2,2);
-	move(3,1);
-	move(6,2);
-	beinPos(1,8);
-	beinPos(4,8);
-	beinPos(5,8);
-	WaitFor(allmoveCompleted);
-	move(2,3);
-	move(3,3);
-	move(6,3);
-	break;
-	case 7 :	//a drehe links
-	move(1,2);
-	move(4,1);
-	move(5,2);
-	beinPos(2,8);
-	beinPos(3,8);
-	beinPos(6,8);
-	WaitFor(allmoveCompleted);
-	move(1,3);
-	move(4,3);
-	move(5,3);
-	break;
-	case 8 :	//b drehe links
-	move(2,1);
-	move(3,2);
-	move(6,1);
-	beinPos(1,8);
-	beinPos(4,8);
-	beinPos(5,8);
-	WaitFor(allmoveCompleted);
-	move(2,3);
-	move(3,3);
-	move(6,3);
-	case 9 :	//a stomp
-	for (i=1;i<=6;i++){ 
-	        BeinPos(i,11);
-	        WaitFor(legmoveCompleted(i));
-	        BeinPos(i,5);
-	        WaitFor(legmoveCompleted(i));
-	    }
-	break;
-	case 10:	//b stomp
-	for (i=6;i<=1;i--){ 
-	        BeinPos(i,11);
-	        WaitFor(legmoveCompleted(i));
-	        BeinPos(i,5);
-	        WaitFor(legmoveCompleted(i));
-	    }
-	break;
-	default:
-	
+		case 0 :	//breitbeinig stellen
+			move(1,1);
+			move(2,1);
+			move(3,5);
+			move(4,5);
+			move(5,2);
+			move(6,2);
+			WaitFor(allmoveCompleted);
+		break;
+		case 1 :	//a Schritt vor
+			move(1,1);
+			move(4,1);
+			move(5,1);
+			move(2,4);
+			move(3,4);
+			move(6,4);
+			WaitFor(allmoveCompleted);
+			move(1,3);
+			move(4,3);
+			move(5,3);
+		break;
+		case 2 :	//b Schritt vor
+			move(2,1);
+			move(3,1);
+			move(6,1);
+			move(1,4);
+			move(4,4);
+			move(5,4);
+			WaitFor(allmoveCompleted);
+			move(2,3);
+			move(3,3);
+			move(6,3);
+		break;
+		case 3 :	//a schritt zurück
+			move(1,2);
+			move(4,2);
+			move(5,2);
+			move(2,4);
+			move(3,4);
+			move(6,4);
+			WaitFor(allmoveCompleted);
+			move(1,3);
+			move(4,3);
+			move(5,3);
+		break;
+		case 4 :	//b schritt zurück
+			move(2,2);
+			move(3,2);
+			move(6,2);
+			move(1,4);
+			move(4,4);
+			move(5,4);
+			WaitFor(allmoveCompleted);
+			move(2,3);
+			move(3,3);
+			move(6,3);
+		break;
+		case 5 :	//a drehe rechts
+			move(1,1);
+			move(4,2);
+			move(5,1);
+			move(2,4);
+			move(3,4);
+			move(6,4);
+			WaitFor(allmoveCompleted);
+			move(1,3);
+			move(4,3);
+			move(5,3);
+		break;
+		case 6 :	//b drehe rechts
+			move(2,2);
+			move(3,1);
+			move(6,2);
+			move(1,4);
+			move(4,4);
+			move(5,4);
+			WaitFor(allmoveCompleted);
+			move(2,3);
+			move(3,3);
+			move(6,3);
+		break;
+		case 7 :	//a drehe links
+			move(1,2);
+			move(4,1);
+			move(5,2);
+			move(2,4);
+			move(3,4);
+			move(6,4);
+			WaitFor(allmoveCompleted);
+			move(1,3);
+			move(4,3);
+			move(5,3);
+		break;
+		case 8 :	//b drehe links
+			move(2,1);
+			move(3,2);
+			move(6,1);
+			move(1,4);
+			move(4,4);
+			move(5,4);
+			WaitFor(allmoveCompleted);
+			move(2,3);
+			move(3,3);
+			move(6,3);
+		break;
+		default:
 	}
 	return 0;
 }
@@ -407,21 +484,9 @@ void main() {
 	//loop
 	while (run==0){
 	    //stand up
-	    for (i=1;i<=6;i++) BeinPos(i,5);
-	    WaitFor(allmoveCompleted());
-	    
-	    //stomp
-	    for (i=1;i<=6;i++){ 
-	        BeinPos(i,11);
-	        WaitFor(legmoveCompleted(i));
-	        BeinPos(i,5);
-	        WaitFor(legmoveCompleted(i));
-	    }
-	    WaitFor(allmoveCompleted());
-	    
-	    //sit down
-	    for (i=1;i<=6;i++) BeinPos(i,8);
-	    WaitFor(allmoveCompleted());
+	    step(0);	    
+	    //Idle dance
+	    for (i=10;i<=13;i++) step(i);
 	    
 	    
 	}
