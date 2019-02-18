@@ -1,11 +1,11 @@
-I## SpiderRoy
+SpiderRoy
 self made Hexapod
 
 #	ServoNr		BeinNr		JointNr
 
 	0		0		0
 	1		0		1
-	2		0		2
+	2		0		2	(nicht vorgesehen)
 	3		1		0
 	4		1		1
 	5		1		2
@@ -43,5 +43,6 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 
 # Install
 Prerequisites:
+	http://wiringpi.com/download-and-install/
 	https://github.com/Reinbert/pca9685
 	...
