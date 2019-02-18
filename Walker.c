@@ -1,7 +1,7 @@
 // SpiderRoy
 // V0.00.1
 //gcc RemoteCarIC.c -o Remote -lwiringPi -lm -lpthread 
-//(will create a makefile as soon as I figure out how)
+//(I will create a makefile as soon as I figure out how)
 
 #include <string.h>
 #include "pca9685.h"
@@ -135,7 +135,7 @@ void WaitFor(int input) {
 	   	Servo[idNr].alt=Servo[idNr].neu;
     		WritePWM(Servo[idNr].pin,Servo[idNr].neu);
 	}
-	return NULL;
+	  pthread_exit(NULL);
 }
 
 int legmoveCompleted(int leg) {
@@ -154,7 +154,7 @@ int allmoveCompleted() {
     return count;
 }
 
-void BeinPos(int bein, int input) {
+void LegPos(int leg, int input) {
     int joint1,joint2,joint3;
 	switch (input) {
 		case : 0 // halte Position
@@ -238,9 +238,9 @@ void BeinPos(int bein, int input) {
 		break;
 		
 	}
-	Servo[bein*3+0].neu =	map(joint0,0,2,Servo[bein*3+0].min,Servo[bein*3+0].max);
-	Servo[bein*3+1].neu =   map(joint1,0,2,Servo[bein*3+1].min,Servo[bein*3+1].max);
-	Servo[bein*3+2].neu =   map(joint2,0,2,Servo[bein*3+2].min,Servo[bein*3+2].max);
+	Servo[leg*3+0].neu 	=	map(joint0,0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
+	Servo[leg*3+1].neu 	=	map(joint1,0,2,Servo[leg*3+1].min,Servo[leg*3+1].max);
+	Servo[bein*3+2].neu 	=	map(joint2,0,2,Servo[leg*3+2].min,Servo[leg*3+2].max);
 }
 
 int move(int leg, int pos) {
@@ -251,27 +251,27 @@ int move(int leg, int pos) {
 		
 	break;
 	case 1 :	//setze fuß vor
-		beinPos(leg, 8);
-		beinPos(leg, 7);
-		beinPos(leg, 4);
+		LegPos(leg, 8);
+		LegPos(leg, 7);
+		LegPos(leg, 4);
 	break;
 	case 2 :	//setze fuß zurück
-		beinPos(leg, 8);
-		beinPos(leg, 9);
-		beinPos(leg, 6);
+		LegPos(leg, 8);
+		LegPos(leg, 9);
+		LegPos(leg, 6);
 	break;
 	case 3 :	//ziehe fuß zur mitte
-		beinPos(leg, 5);
+		LegPos(leg, 5);
 	break;
 	case 4 :	//hebe Fuß
-		beinPos(leg, 8);
+		LegPos(leg, 8);
 	break;
 	
 	//Idle/Dance Moves
 	
 	case 10 :	//a stomp
 		for (i=1;i<=6;i++){ 
-	        	BeinPos(i,11);
+	        	LegPos(i,11);
 	        	WaitFor(legmoveCompleted(i));
 	        	BeinPos(i,5);
 	        	WaitFor(legmoveCompleted(i));
@@ -279,67 +279,67 @@ int move(int leg, int pos) {
 	break;
 	case 11:	//b stomp
 		for (i=6;i<=1;i--){ 
-	        	BeinPos(i,11);
+	        	LegPos(i,11);
 	        	WaitFor(legmoveCompleted(i));
-	        	BeinPos(i,5);
+	        	LegPos(i,5);
 	        	WaitFor(legmoveCompleted(i));
 	    	}
 	break;
 	case 12: 	//Räkeln
 		for (i=6;i<=1;i--){ 
-		        BeinPos(i,14);
+		        LegPos(i,14);
 		        WaitFor(legmoveCompleted(i));
-			BeinPos(i,10);
+			LegPos(i,10);
 			WaitFor(legmoveCompleted(i));
-			BeinPos(i,12);
+			LegPos(i,12);
 			WaitFor(legmoveCompleted(i));
-		        BeinPos(i,5);
+		        LegPos(i,5);
 		        WaitFor(legmoveCompleted(i));
 		}
 	break;
 	case 12 :	//schunkeln
 		Step(0);
-		BeinPos(1,0);
-		BeinPos(2,1);
-		BeinPos(3,1);
-		BeinPos(4,1);
-		BeinPos(5,1);
-		BeinPos(6,2);
+		LegPos(1,0);
+		LegPos(2,1);
+		LegPos(3,1);
+		LegPos(4,1);
+		LegPos(5,1);
+		LegPos(6,2);
 		WaitFor(allmoveCompleted);
-		BeinPos(1,1);
-		BeinPos(2,2);
-		BeinPos(3,1);
-		BeinPos(4,1);
-		BeinPos(5,0);
-		BeinPos(6,1);
+		LegPos(1,1);
+		LegPos(2,2);
+		LegPos(3,1);
+		LegPos(4,1);
+		LegPos(5,0);
+		LegPos(6,1);
 		WaitFor(allmoveCompleted);
-		BeinPos(1,1);
-		BeinPos(2,1);
-		BeinPos(3,2);
-		BeinPos(4,0);
-		BeinPos(5,1);
-		BeinPos(6,1);
+		LegPos(1,1);
+		LegPos(2,1);
+		LegPos(3,2);
+		LegPos(4,0);
+		LegPos(5,1);
+		LegPos(6,1);
 		WaitFor(allmoveCompleted);
-		BeinPos(1,2);
-		BeinPos(2,1);
-		BeinPos(3,1);
-		BeinPos(4,1);
-		BeinPos(5,1);
-		BeinPos(6,0);
+		LegPos(1,2);
+		LegPos(2,1);
+		LegPos(3,1);
+		LegPos(4,1);
+		LegPos(5,1);
+		LegPos(6,0);
 		WaitFor(allmoveCompleted);
-		BeinPos(1,1);
-		BeinPos(2,2);
-		BeinPos(3,1);
-		BeinPos(4,1);
-		BeinPos(5,0);
-		BeinPos(6,1);
+		LegPos(1,1);
+		LegPos(2,2);
+		LegPos(3,1);
+		LegPos(4,1);
+		LegPos(5,0);
+		LegPos(6,1);
 		WaitFor(allmoveCompleted);
-		BeinPos(1,1);
-		BeinPos(2,1);
-		BeinPos(3,0);
-		BeinPos(4,2);
-		BeinPos(5,1);
-		BeinPos(6,1);
+		LegPos(1,1);
+		LegPos(2,1);
+		LegPos(3,0);
+		LegPos(4,2);
+		LegPos(5,1);
+		LegPos(6,1);
 		WaitFor(allmoveCompleted);
 	break;
 	default :
@@ -487,7 +487,13 @@ void main() {
 	    step(0);	    
 	    //Idle dance
 	    for (i=10;i<=13;i++) step(i);
-	    
-	    
+	}
+	
+			       
+	//end
+	run=1;
+	for (i=0;i<20;i++) {
+		pthread_join(t_Servo[i],NULL);
+		printf("Thread %i/20 closed",i);
 	}
 }
