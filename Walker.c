@@ -238,9 +238,20 @@ void LegPos(int leg, int input) {
 		break;
 		
 	}
+	
 	Servo[leg*3+0].neu 	=	map(joint0,0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
 	Servo[leg*3+1].neu 	=	map(joint1,0,2,Servo[leg*3+1].min,Servo[leg*3+1].max);
-	Servo[bein*3+2].neu 	=	map(joint2,0,2,Servo[leg*3+2].min,Servo[leg*3+2].max);
+	switch (joint1) {	//	change factor from 10 to adjust foot-segment
+		case 0 :
+			Servo[leg*3+2].neu 	=	map(joint2*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
+		breal;
+		case 1 :
+			Servo[leg*3+2].neu 	=	map(joint2*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
+		break;
+		case 2 :
+			Servo[leg*3+2].neu 	=	map(joint2*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
+		break;
+	}
 }
 
 int move(int leg, int pos) {
