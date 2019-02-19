@@ -4,7 +4,8 @@
 //(I will create a makefile as soon as I figure out how)
 
 #include <string.h>
-#include "pca9685.h"
+//#include "pca9685.h"
+#include <wiringPiI2C.h>
 #include <wiringPi.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,8 +36,8 @@ long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
     return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow;
 }
 
-void setupServos() {			//take a look at "https://github.com/Reinbert/pca9685/blob/master/examples/calibrate.c"
-	int i;				//to get all the data for this section
+void setupServos(int j) {			
+	int i;				//get all the data for this section before
 	
 	Servo[0].pin	=	;
 	Servo[1].pin	=	;
@@ -100,8 +101,10 @@ void setupServos() {			//take a look at "https://github.com/Reinbert/pca9685/blo
 	Servo[19].min	=	;
 	Servo[19].max	=	;
 	
-	for (i=1;i<=6;i++) {
-	beinPos(i,5);
+	for (i=0;i<=6;i++) {
+		pinMode(i,PWM_OUTPUT);
+		pthread_create(&(t_Servo[i],NULL,&ServoThread,NULL);
+		beinPos(i,5);
 	}
 	
 }
@@ -122,13 +125,13 @@ void WaitFor(int input) {
 
 		if (Servo[idNr].alt < Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
-				WritePWM(Servo[idNr].pin,pwm);
+				pwmWrite(Servo[idNr].pin,pwm);
 				delay(SLOWMO);
 			}
 		}
 		if (Servo[idNr].alt > Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm > Servo[idNr].neu;pwm--) {
-				WritePWM(Servo[idNr].pin,pwm);
+				pwmWrite(Servo[idNr].pin,pwm);
 				delay(SLOWMO);
 			}
 		}
@@ -141,14 +144,14 @@ void WaitFor(int input) {
 int legmoveCompleted(int leg) {
    int i, count = 0;
     for (i=0;i<=2;i++) {
-        count = count + abs(Servo[i].alt) - abs(ServoPos[i,1]);
+        count = count + abs(Servo[i].alt) - abs(Servo[i].neu);
     }
     return count;
 }
 
 int allmoveCompleted() {
     int i, count = 0;
-    for (i=0;i<=7;i++) {
+    for (i=0;i<=6;i++) {
         count = count + legmoveCompleted(i);
     }
     return count;
@@ -498,9 +501,16 @@ int step (int dir) {
 }
 
 void main() {
-	//setup
+	//setup*****************************************************************
 	int i;
-	int fd0 = pca9685Setup(PIN_BASE0, I2CDEVID0, HERTZ);
+	// wiringPi
+	if(wiringPiSetup() == -1){ 
+        	printf("setup wiringPi faiservo !");
+        	return 1; 
+    	};
+	wiringPiI2CSetup (int I2CDEVID0);
+	wiringPiI2CSetup (int I2CDEVID1) ;
+/*	int fd0 = pca9685Setup(PIN_BASE0, I2CDEVID0, HERTZ);
 	if (fd0 < 0){
 		printf("Error in setup\n");
 		return fd0;
@@ -513,13 +523,10 @@ void main() {
 	// Reset all output
 	pca9685PWMReset(fd0);
 	pca9685PWMReset(fd1);
-	
-	setupServos();
-	for (i=0;i<20;i++) {
-		pthread_create(&(t_Servo[i],NULL,&ServoThread,NULL);
-	}
+*/
+	setupServos(20);
 		
-	//loop
+	//loop******************************************************************
 	while (run==0){
 	    //stand up
 	    step(0);	    
@@ -528,7 +535,7 @@ void main() {
 	}
 	
 			       
-	//end
+	//end*******************************************************************
 	run=1;
 	for (i=0;i<20;i++) {
 		pthread_join(t_Servo[i],NULL);
