@@ -141,7 +141,7 @@ void WaitFor(int input) {
 int legmoveCompleted(int leg) {
    int i, count = 0;
     for (i=0;i<=2;i++) {
-        count = count + abs(ServoPos[i,0]) - abs(ServoPos[i,1]);
+        count = count + abs(Servo[i].alt) - abs(ServoPos[i,1]);
     }
     return count;
 }
@@ -154,85 +154,86 @@ int allmoveCompleted() {
     return count;
 }
 
-void LegPos(int leg, int input) {
-    int joint1,joint2,joint3;
+void LegPos (int leg, int input) {
+    	int joint[3];
+	
 	switch (input) {
 		case : 0 // halte Position
 		break;
 		case : 1 // unten vorne stand
-		joint1 = 0;
-		joint2 = 0;
-		joint3 = 1;
+		joint[0] = 0;
+		joint[1] = 0;
+		joint[2] = 1;
 		break;
 		case : 2 // unten mitte stand
-		joint1 = 1;
-		joint2 = 0;
-		joint3 = 1;
+		joint[0] = 1;
+		joint[1] = 0;
+		joint[2] = 1;
 		break;
 		case : 3 // unten hinten stand
-		joint1 = 2;
-		joint2 = 0;
-		joint3 = 1;
+		joint[0] = 2;
+		joint[1] = 0;
+		joint[2] = 1;
 		break;
 		case : 4 // mitte vorne stand
-		joint1 = 0;
-		joint2 = 1;
-		joint3 = 1;
+		joint[0] = 0;
+		joint[1] = 1;
+		joint[2] = 1;
 		break;
 		case : 5 // mitte mitte stand
-		joint1 = 1;
-		joint2 = 1;
-		joint3 = 1;
+		joint[0] = 1;
+		joint[1] = 1;
+		joint[2] = 1;
 		break;
 		case : 6 // mitte hinten stand
-		joint0 = 2;
-		joint1 = 1;
-		joint2 = 1;
+		joint[0] = 2;
+		joint[1] = 1;
+		joint[2] = 1;
 		break; 
 		case : 7 // oben vorne stand
-		joint0 = 0;
-		joint1 = 2;
-		joint2 = 1;
+		joint[0] = 0;
+		joint[1] = 2;
+		joint[2] = 1;
 		break;
 		case : 8 // oben mitte stand
-		joint0 = 1;
-		joint1 = 2;
-		joint2 = 1;
+		joint[0] = 1;
+		joint[1] = 2;
+		joint[2] = 1;
 		break;
 		case : 9 // oben hinten stand
-		joint0 = 2;
-		joint1 = 2
-		joint2 = 1;
+		joint[0] = 2;
+		joint[1] = 2
+		joint[2] = 1;
 		break;
 		case : 10 // oben vorne gestreckt
-		joint0 = 0;
-		joint1 = 2;
-		joint2 = 0;
+		joint[0] = 0;
+		joint[1] = 2;
+		joint[2] = 0;
 		break;
 		case : 11 // oben mitte gestreckt
-		joint0 = 1;
-		joint1 = 2;
-		joint2 = 0;
+		joint[0] = 1;
+		joint[1] = 2;
+		joint[2] = 0;
 		break;
 		case : 12 // oben hinten gestreckt
-		joint0 = 2;
-		joint1 = 2;
-		joint2 = 0;
+		joint[0] = 2;
+		joint[1] = 2;
+		joint[2] = 0;
 		break;
 		case : 13 // unten vorne eingerollt
-		joint0 = 0;
-		joint1 = 0;
-		joint2 = 2;
+		joint[0] = 0;
+		joint[1] = 0;
+		joint[2] = 2;
 		break;
 		case : 14 // unten mitte eingerollt
-		joint0 = 1;
-		joint1 = 0;
-		joint2 = 2;
+		joint[0] = 1;
+		joint[1] = 0;
+		joint[2] = 2;
 		break;
 		case : 15 // unten hinten eingerollt
-		joint0 = 2;
-		joint1 = 0;
-		joint2 = 2;
+		joint[0] = 2;
+		joint[1] = 0;
+		joint[2] = 2;
 		break;
 		default // halte Position
 		break;
@@ -352,6 +353,32 @@ int move(int leg, int pos) {
 		LegPos(5,1);
 		LegPos(6,1);
 		WaitFor(allmoveCompleted);
+	break;
+	//Head moves
+	
+	casse 20 :	//Center
+		LegPos(0,5);
+		WaitFor(legmoveCompleted);
+	break;
+	casse 21 :	//Nod 
+		LegPos(0,8);
+		WaitFor(legmoveCompleted);
+		LegPos(0,5);
+		WaitFor(legmoveCompleted);
+	break;
+	casse 22 :	//Shake 
+		LegPos(0,6);
+		WaitFor(legmoveCompleted);
+		LegPos(0,7);
+		WaitFor(legmoveCompleted);
+		LegPos(0,5);
+		WaitFor(legmoveCompleted);
+	break;
+	casse 23 :	//Sniff 
+	break;
+	casse 24 :	//Center 
+	break;
+	casse 25 :	//Center 
 	break;
 	default :
 	}
