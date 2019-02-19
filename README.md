@@ -53,5 +53,4 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 # Install
 Prerequisites:
 	http://wiringpi.com/download-and-install/
-	https://github.com/Reinbert/pca9685
 	...
