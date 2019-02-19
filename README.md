@@ -14,7 +14,7 @@ self made Hexapod
 
 	0		0		0
 	1		0		1
-	2		0		2	(nicht vorgesehen)
+	2		0		2	(not used, maybe for a clamp-upgrade some time)
 	3		1		0
 	4		1		1
 	5		1		2
@@ -48,9 +48,11 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 			2
   0 - Schulter  vor/zurück
   1 - Schulter  hoch/runter
-  2 . Knie      rein/raus
+  2 - Knie      rein/raus
 
-# Install
-Prerequisites:
+# Install:
+
+	Prerequisites:
 	http://wiringpi.com/download-and-install/
 	...
+	gcc RemoteCar.c -o Remote -lwiringPi -lm -lpthread
