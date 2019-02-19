@@ -55,4 +55,4 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 	Prerequisites:
 	http://wiringpi.com/download-and-install/
 	...
-	gcc RemoteCar.c -o Remote -lwiringPi -lm -lpthread
+	gcc Walker.c -o Walker -lwiringPi -lm -lpthread
