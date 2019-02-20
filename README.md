@@ -56,3 +56,25 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 	http://wiringpi.com/download-and-install/
 	...
 	gcc Walker.c -o Walker -lwiringPi -lm -lpthread
+	
+# Usage:
+	
+	sudo ./Walker [command1, command2, ..]
+	commands:
+	10	Stomp CW
+	11	Stomp CCW
+	12	Sprawl
+	13	Sway
+	20	Center head
+	21	Nod head
+	22	Shake head
+	30	put legs apart
+	31	one stepp forward a
+	32	one stepp forward b
+	33	one stepp back a
+	34	one stepp back b
+	35	turn right a
+	36	turn right b
+	37	turn left a
+	38	turn left b
+
