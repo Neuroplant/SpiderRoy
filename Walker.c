@@ -281,7 +281,48 @@ int move(int leg, int pos) {
 	case 4 :	//hebe Fuß
 		LegPos(leg, 8);
 	break;
-	
+		move(6,4);
+		WaitFor(allmoveCompleted);
+		move(1,3);
+		move(4,3);
+		move(5,3);
+	break;
+	case 6 :	//b drehe rechts
+		move(2,2);
+		move(3,1);
+		move(6,2);
+		move(1,4);
+		move(4,4);
+		move(5,4);
+		WaitFor(allmoveCompleted);
+		move(2,3);
+		move(3,3);
+		move(6,3);
+	break;
+	case 7 :	//a drehe links
+		move(1,2);
+		move(4,1);
+		move(5,2);
+		move(2,4);
+		move(3,4);
+		move(6,4);
+		WaitFor(allmoveCompleted);
+		move(1,3);
+		move(4,3);
+		move(5,3);
+	break;
+	case 8 :	//b drehe links
+		move(2,1);
+		move(3,2);
+		move(6,1);
+		move(1,4);
+		move(4,4);
+		move(5,4);
+		WaitFor(allmoveCompleted);
+		move(2,3);
+		move(3,3);
+		move(6,3);
+	break;
 	//Idle/Dance Moves
 	
 	case 10 :	//a stomp
@@ -383,124 +424,86 @@ int move(int leg, int pos) {
 	break;
 	casse 25 :	//Center 
 	break;
-	default :
+	case 30 :	//breitbeinig stellen
+		move(1,1);
+		move(2,1);
+		move(3,5);
+		move(4,5);
+		move(5,2);
+		move(6,2);
+		WaitFor(allmoveCompleted);
+	break;
+	case 31 :	//a Schritt vor
+		move(1,1);
+		move(4,1);
+		move(5,1);
+		move(2,4);
+		move(3,4);
+		move(6,4);
+		WaitFor(allmoveCompleted);
+		move(1,3);
+		move(4,3);
+		move(5,3);
+	break;
+	case 32 :	//b Schritt vor
+		move(2,1);
+		move(3,1);
+		move(6,1);
+		move(1,4);
+		move(4,4);
+		move(5,4);
+		WaitFor(allmoveCompleted);
+		move(2,3);
+		move(3,3);
+		move(6,3);
+	break;
+	case 33 :	//a schritt zurück
+		move(1,2);
+		move(4,2);
+		move(5,2);
+		move(2,4);
+		move(3,4);
+		move(6,4);
+		WaitFor(allmoveCompleted);
+		move(1,3);
+		move(4,3);
+		move(5,3);
+	break;
+	case 34 :	//b schritt zurück
+		move(2,2);
+		move(3,2);
+		move(6,2);
+		move(1,4);
+		move(4,4);
+		move(5,4);
+		WaitFor(allmoveCompleted);
+		move(2,3);
+		move(3,3);
+		move(6,3);
+	break;
+	case 35 :	//a drehe rechts
+		move(1,1);
+		move(4,2);
+		move(5,1);
+		move(2,4);
+		move(3,4);
+		move(6,4);
+		WaitFor(allmoveCompleted);
+		move(2,3);
+		move(3,3);
+		move(6,3);
+	case 36	:	//b drehe rechts
+	break;
+	case 37 :	//a drehe links
+	break;
+	case 38 :	//b drehe links
+	break;
+	default:
 	}
 	return 0;
 }
 
-int step (int dir) {
-	switch (dir) {
-		case 0 :	//breitbeinig stellen
-			move(1,1);
-			move(2,1);
-			move(3,5);
-			move(4,5);
-			move(5,2);
-			move(6,2);
-			WaitFor(allmoveCompleted);
-		break;
-		case 1 :	//a Schritt vor
-			move(1,1);
-			move(4,1);
-			move(5,1);
-			move(2,4);
-			move(3,4);
-			move(6,4);
-			WaitFor(allmoveCompleted);
-			move(1,3);
-			move(4,3);
-			move(5,3);
-		break;
-		case 2 :	//b Schritt vor
-			move(2,1);
-			move(3,1);
-			move(6,1);
-			move(1,4);
-			move(4,4);
-			move(5,4);
-			WaitFor(allmoveCompleted);
-			move(2,3);
-			move(3,3);
-			move(6,3);
-		break;
-		case 3 :	//a schritt zurück
-			move(1,2);
-			move(4,2);
-			move(5,2);
-			move(2,4);
-			move(3,4);
-			move(6,4);
-			WaitFor(allmoveCompleted);
-			move(1,3);
-			move(4,3);
-			move(5,3);
-		break;
-		case 4 :	//b schritt zurück
-			move(2,2);
-			move(3,2);
-			move(6,2);
-			move(1,4);
-			move(4,4);
-			move(5,4);
-			WaitFor(allmoveCompleted);
-			move(2,3);
-			move(3,3);
-			move(6,3);
-		break;
-		case 5 :	//a drehe rechts
-			move(1,1);
-			move(4,2);
-			move(5,1);
-			move(2,4);
-			move(3,4);
-			move(6,4);
-			WaitFor(allmoveCompleted);
-			move(1,3);
-			move(4,3);
-			move(5,3);
-		break;
-		case 6 :	//b drehe rechts
-			move(2,2);
-			move(3,1);
-			move(6,2);
-			move(1,4);
-			move(4,4);
-			move(5,4);
-			WaitFor(allmoveCompleted);
-			move(2,3);
-			move(3,3);
-			move(6,3);
-		break;
-		case 7 :	//a drehe links
-			move(1,2);
-			move(4,1);
-			move(5,2);
-			move(2,4);
-			move(3,4);
-			move(6,4);
-			WaitFor(allmoveCompleted);
-			move(1,3);
-			move(4,3);
-			move(5,3);
-		break;
-		case 8 :	//b drehe links
-			move(2,1);
-			move(3,2);
-			move(6,1);
-			move(1,4);
-			move(4,4);
-			move(5,4);
-			WaitFor(allmoveCompleted);
-			move(2,3);
-			move(3,3);
-			move(6,3);
-		break;
-		default:
-	}
-	return 0;
-}
-
-void main() {
+void main(int argc, int argv[]) {
 	//setup*****************************************************************
 	int i;
 	// wiringPi
@@ -525,20 +528,29 @@ void main() {
 	pca9685PWMReset(fd1);
 */
 	setupServos(20);
-		
-	//loop******************************************************************
-	while (run==0){
-	    //stand up
-	    step(0);	    
-	    //Idle dance
-	    for (i=10;i<=13;i++) step(i);
 	}
 	
 			       
-	//end*******************************************************************
+	*/
+	//loop******************************************************************
+	if (argc==0) {
+		while (run==0){
+			//stand up
+	    		move(0,30);	    
+	    		//Idle dance
+	    		for (i=10;i<=13;i++) move(0,i);
+		}
+	}
+	//Parameter************************************************************
+	for (i=0;i<argc;i++) {
+		move(0,argv[i]);
+	}
+		
+	//end******************************************************************
 	run=1;
 	for (i=0;i<20;i++) {
 		pthread_join(t_Servo[i],NULL);
 		printf("Thread %i/20 closed",i);
 	}
+	return 0
 }
