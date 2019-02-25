@@ -37,7 +37,7 @@ long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
 }
 
 void setupServos(int j) {			
-	int i;				//get all the data for this section before
+	unsigned int i;				//get all the data for this section before
 	
 	Servo[0].pin	=	;
 	Servo[1].pin	=	;
@@ -103,7 +103,7 @@ void setupServos(int j) {
 	
 	for (i=0;i<=6;i++) {
 		pinMode(i,PWM_OUTPUT);
-		pthread_create(&(t_Servo[i],NULL,&ServoThread,NULL);
+		pthread_create(&(t_Servo[i],NULL,&ServoThread,&i);
 		beinPos(i,5);
 	}
 	
@@ -116,11 +116,11 @@ void WaitFor(int input) {
 
 *void ServoThread (void *arg) {
 	int pwm;
-	pthread_t id = pthread_self();
+	/*pthread_t id = pthread_self();
 	int idNr = 0;
 	while (not pthread_equal(id,ServoNr[idNr]) idNr++;	//find idNr of this task
-	
-	
+	*/
+	int idNr = *((unsigned int *)arg
 	while (run==0) {
 
 		if (Servo[idNr].alt < Servo[idNr].neu) {
