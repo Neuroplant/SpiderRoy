@@ -19,7 +19,7 @@
 #define MAX_PWM 	4096
 #define HERTZ 		50
 
-#define SLOWMO 		100		// Bewegungsgeschwindigkeit
+#define SLOMO 		100		// Bewegungsgeschwindigkeit
 
 struct s_Servo {
     int pin;
@@ -27,7 +27,7 @@ struct s_Servo {
     int max;
     int alt;
     int neu;
-}
+};
 struct s_Servo Servo[20];
 pthread_t t_Servo[20];
 
@@ -35,13 +35,41 @@ int run=1;
 long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
     return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow;
 }
+void LegPos (int leg, int input);
+
+void *ServoThread (void *arg) {
+	int pwm;
+	/*pthread_t id = pthread_self();
+	int idNr = 0;
+	while (not pthread_equal(id,ServoNr[idNr]) idNr++;	//find idNr of this task
+	*/
+	int idNr = *((unsigned int *)arg);
+	while (run==0) {
+
+		if (Servo[idNr].alt < Servo[idNr].neu) {
+			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
+				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,4096));
+				delay(SLOMO);
+			}
+		}
+		if (Servo[idNr].alt > Servo[idNr].neu) {
+			for	(pwm = Servo[idNr].alt;pwm > Servo[idNr].neu;pwm--) {
+				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,4096));
+				delay(SLOMO);
+			}
+		}
+	   	Servo[idNr].alt=Servo[idNr].neu;
+    		pwmWrite(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,4096));
+	}
+	  pthread_exit(NULL);
+}
 
 void setupServos(int j) {			
 	unsigned int i;				//get all the data for this section before
 	
-	Servo[0].pin	=	;
-	Servo[1].pin	=	;
-	Servo[2].pin	=	;
+	Servo[0].pin	=	15 + PIN_BASE1;
+	Servo[1].pin	=	14 + PIN_BASE1;
+	Servo[2].pin	=	13 + PIN_BASE1;
 	Servo[3].pin	=	0 + PIN_BASE0;
 	Servo[4].pin	=	1 + PIN_BASE0;
 	Servo[5].pin	=	2 + PIN_BASE0;
@@ -105,54 +133,28 @@ void setupServos(int j) {
 	Servo[20].max	=	25;
 	
 	for (i=0;i<=6;i++) {
-		pinMode(i,PWM_OUTPUT);
-		pthread_create(&(t_Servo[i],NULL,&ServoThread,&i);
-		beinPos(i,5);
+		pinMode(i,OUTPUT);
+		pthread_create(&t_Servo[i],NULL,&ServoThread,&i);
+		LegPos(i,5);
 	}
 	
 }
 
-void WaitFor(int input) {
-    while (input != 0) delay(SLOMO);
-    return NULL;
+void WaitFor(int value) {
+    while (value != 0) delay(SLOMO);
+    return;
 }
 
-*void ServoThread (void *arg) {
-	int pwm;
-	/*pthread_t id = pthread_self();
-	int idNr = 0;
-	while (not pthread_equal(id,ServoNr[idNr]) idNr++;	//find idNr of this task
-	*/
-	int idNr = *((unsigned int *)arg
-	while (run==0) {
-
-		if (Servo[idNr].alt < Servo[idNr].neu) {
-			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
-				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,4096));
-				delay(SLOWMO);
-			}
-		}
-		if (Servo[idNr].alt > Servo[idNr].neu) {
-			for	(pwm = Servo[idNr].alt;pwm > Servo[idNr].neu;pwm--) {
-				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,4096));
-				delay(SLOWMO);
-			}
-		}
-	   	Servo[idNr].alt=Servo[idNr].neu;
-    		WritePWM(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,4096));
-	}
-	  pthread_exit(NULL);
-}
 
 int legmoveCompleted(int leg) {
    int i, count = 0;
     for (i=0;i<=2;i++) {
-        count = count + abs(Servo[i].alt) - abs(Servo[i].neu);
+        count = count + abs(Servo[leg*3+i].alt) - abs(Servo[leg*3+i].neu);
     }
     return count;
 }
 
-int allmoveCompleted() {
+int allmoveCompleted(void) {
     int i, count = 0;
     for (i=0;i<=6;i++) {
         count = count + legmoveCompleted(i);
@@ -164,99 +166,98 @@ void LegPos (int leg, int input) {
     	int joint[3];
 	
 	switch (input) {
-		case : 0 // halte Position
+		case 0 : // halte Position
 		break;
-		case : 1 // unten vorne stand
+		case 1 : // unten vorne stand
 		joint[0] = 0;
 		joint[1] = 0;
 		joint[2] = 1;
 		break;
-		case : 2 // unten mitte stand
+		case 2 : // unten mitte stand
 		joint[0] = 1;
 		joint[1] = 0;
 		joint[2] = 1;
 		break;
-		case : 3 // unten hinten stand
+		case 3 : // unten hinten stand
 		joint[0] = 2;
 		joint[1] = 0;
 		joint[2] = 1;
 		break;
-		case : 4 // mitte vorne stand
+		case 4 : // mitte vorne stand
 		joint[0] = 0;
 		joint[1] = 1;
 		joint[2] = 1;
 		break;
-		case : 5 // mitte mitte stand
+		case 5 : // mitte mitte stand
 		joint[0] = 1;
 		joint[1] = 1;
 		joint[2] = 1;
 		break;
-		case : 6 // mitte hinten stand
+		case 6 : // mitte hinten stand
 		joint[0] = 2;
 		joint[1] = 1;
 		joint[2] = 1;
 		break; 
-		case : 7 // oben vorne stand
+		case 7 : // oben vorne stand
 		joint[0] = 0;
 		joint[1] = 2;
 		joint[2] = 1;
 		break;
-		case : 8 // oben mitte stand
+		case 8 : // oben mitte stand
 		joint[0] = 1;
 		joint[1] = 2;
 		joint[2] = 1;
 		break;
-		case : 9 // oben hinten stand
+		case 9 : // oben hinten stand
 		joint[0] = 2;
-		joint[1] = 2
+		joint[1] = 2;
 		joint[2] = 1;
 		break;
-		case : 10 // oben vorne gestreckt
+		case 10 : // oben vorne gestreckt
 		joint[0] = 0;
 		joint[1] = 2;
 		joint[2] = 0;
 		break;
-		case : 11 // oben mitte gestreckt
+		case 11 : // oben mitte gestreckt
 		joint[0] = 1;
 		joint[1] = 2;
 		joint[2] = 0;
 		break;
-		case : 12 // oben hinten gestreckt
+		case 12 : // oben hinten gestreckt
 		joint[0] = 2;
 		joint[1] = 2;
 		joint[2] = 0;
 		break;
-		case : 13 // unten vorne eingerollt
+		case 13 : // unten vorne eingerollt
 		joint[0] = 0;
 		joint[1] = 0;
 		joint[2] = 2;
 		break;
-		case : 14 // unten mitte eingerollt
+		case 14 : // unten mitte eingerollt
 		joint[0] = 1;
 		joint[1] = 0;
 		joint[2] = 2;
 		break;
-		case : 15 // unten hinten eingerollt
+		case 15 : // unten hinten eingerollt
 		joint[0] = 2;
 		joint[1] = 0;
 		joint[2] = 2;
 		break;
-		default // halte Position
+		default :// halte Position
 		break;
-		
 	}
 	
-	Servo[leg*3+0].neu 	=	map(joint0,0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
-	Servo[leg*3+1].neu 	=	map(joint1,0,2,Servo[leg*3+1].min,Servo[leg*3+1].max);
-	switch (joint1) {	//	change factor from 10 to adjust foot-segment
+Servo[leg*3+0].neu 	=	map(joint[leg*3+0],0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
+	Servo[leg*3+1].neu 	=	map(joint[leg*3+1],0,2,Servo[leg*3+1].min,Servo[leg*3+1].max);
+switch (joint[1]) {	//	change factor from 10 to adjust foot-segment
 		case 0 :
-			Servo[leg*3+2].neu 	=	map(joint2*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
-		breal;
+			Servo[leg*3+2].neu 	=	map(joint[2]*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
+		break;
 		case 1 :
-			Servo[leg*3+2].neu 	=	map(joint2*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
+Servo[leg*3+2].neu 	=	map(joint[2]*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
 		break;
 		case 2 :
-			Servo[leg*3+2].neu 	=	map(joint2*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
+			Servo[leg*3+2].neu 	=	map(joint[2]*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
 		break;
 	}
 }
@@ -284,8 +285,9 @@ int move(int leg, int pos) {
 	case 4 :	//hebe Fuß
 		LegPos(leg, 8);
 	break;
+	case 5 :
 		move(6,4);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		move(1,3);
 		move(4,3);
 		move(5,3);
@@ -297,7 +299,7 @@ int move(int leg, int pos) {
 		move(1,4);
 		move(4,4);
 		move(5,4);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -309,7 +311,7 @@ int move(int leg, int pos) {
 		move(2,4);
 		move(3,4);
 		move(6,4);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		move(1,3);
 		move(4,3);
 		move(5,3);
@@ -321,7 +323,7 @@ int move(int leg, int pos) {
 		move(1,4);
 		move(4,4);
 		move(5,4);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -332,7 +334,7 @@ int move(int leg, int pos) {
 		for (i=1;i<=6;i++){ 
 	        	LegPos(i,11);
 	        	WaitFor(legmoveCompleted(i));
-	        	BeinPos(i,5);
+	        	LegPos(i,5);
 	        	WaitFor(legmoveCompleted(i));
 	    	}
 	break;
@@ -356,76 +358,76 @@ int move(int leg, int pos) {
 		        WaitFor(legmoveCompleted(i));
 		}
 	break;
-	case 12 :	//schunkeln
-		Step(0);
+	case 13 :	//schunkeln
+		move(0,30);
 		LegPos(1,0);
 		LegPos(2,1);
 		LegPos(3,1);
 		LegPos(4,1);
 		LegPos(5,1);
 		LegPos(6,2);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		LegPos(1,1);
 		LegPos(2,2);
 		LegPos(3,1);
 		LegPos(4,1);
 		LegPos(5,0);
 		LegPos(6,1);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		LegPos(1,1);
 		LegPos(2,1);
 		LegPos(3,2);
 		LegPos(4,0);
 		LegPos(5,1);
 		LegPos(6,1);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		LegPos(1,2);
 		LegPos(2,1);
 		LegPos(3,1);
 		LegPos(4,1);
 		LegPos(5,1);
 		LegPos(6,0);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		LegPos(1,1);
 		LegPos(2,2);
 		LegPos(3,1);
 		LegPos(4,1);
 		LegPos(5,0);
 		LegPos(6,1);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		LegPos(1,1);
 		LegPos(2,1);
 		LegPos(3,0);
 		LegPos(4,2);
 		LegPos(5,1);
 		LegPos(6,1);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 	break;
 	//Head moves
 	
-	casse 20 :	//Center
+	case 20 :	//Center
 		LegPos(0,5);
-		WaitFor(legmoveCompleted);
+		WaitFor(legmoveCompleted(leg));
 	break;
-	casse 21 :	//Nod 
+	case 21 :	//Nod 
 		LegPos(0,8);
-		WaitFor(legmoveCompleted);
+		WaitFor(legmoveCompleted(leg));
 		LegPos(0,5);
-		WaitFor(legmoveCompleted);
+		WaitFor(legmoveCompleted(leg));
 	break;
-	casse 22 :	//Shake 
+	case 22 :	//Shake 
 		LegPos(0,6);
-		WaitFor(legmoveCompleted);
+		WaitFor(legmoveCompleted(leg));
 		LegPos(0,7);
-		WaitFor(legmoveCompleted);
+		WaitFor(legmoveCompleted(leg));
 		LegPos(0,5);
-		WaitFor(legmoveCompleted);
+		WaitFor(legmoveCompleted(leg));
 	break;
-	casse 23 :	//Sniff 
+	case 23 :	//Sniff 
 	break;
-	casse 24 :	//Center 
+	case 24 :	//Center 
 	break;
-	casse 25 :	//Center 
+	case 25 :	//Center 
 	break;
 	case 30 :	//breitbeinig stellen
 		move(1,1);
@@ -434,7 +436,7 @@ int move(int leg, int pos) {
 		move(4,5);
 		move(5,2);
 		move(6,2);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 	break;
 	case 31 :	//a Schritt vor
 		move(1,1);
@@ -443,7 +445,7 @@ int move(int leg, int pos) {
 		move(2,4);
 		move(3,4);
 		move(6,4);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		move(1,3);
 		move(4,3);
 		move(5,3);
@@ -455,7 +457,7 @@ int move(int leg, int pos) {
 		move(1,4);
 		move(4,4);
 		move(5,4);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -467,7 +469,7 @@ int move(int leg, int pos) {
 		move(2,4);
 		move(3,4);
 		move(6,4);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		move(1,3);
 		move(4,3);
 		move(5,3);
@@ -479,7 +481,7 @@ int move(int leg, int pos) {
 		move(1,4);
 		move(4,4);
 		move(5,4);
-		WaitFor(allmoveCompleted);
+		WaitFor(allmoveCompleted());
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -491,7 +493,7 @@ int move(int leg, int pos) {
 		move(2,4);
 		move(3,4);
 		move(6,4);
-		WaitFor(allmoveCompleted);
+		WaitFor((int)allmoveCompleted());
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -502,20 +504,21 @@ int move(int leg, int pos) {
 	case 38 :	//b drehe links
 	break;
 	default:
+	break;
 	}
 	return 0;
 }
 
-void main(int argc, int argv[]) {
+int main(int argc, int argv[]) {
 	//setup*****************************************************************
 	int i;
 	// wiringPi
 	if(wiringPiSetup() == -1){ 
         	printf("setup wiringPi faiservo !");
         	return 1; 
-    	};
-	wiringPiI2CSetup (int I2CDEVID0);
-	wiringPiI2CSetup (int I2CDEVID1) ;
+    	}
+	wiringPiI2CSetup (I2CDEVID0);
+	wiringPiI2CSetup (I2CDEVID1);
 	int fd0 = pca9685Setup(PIN_BASE0, I2CDEVID0, HERTZ);
 	if (fd0 < 0){
 		printf("Error in setup\n");
@@ -531,10 +534,10 @@ void main(int argc, int argv[]) {
 	pca9685PWMReset(fd1);
 
 	setupServos(20);
-	}
+	
 	
 			       
-	*/
+	
 	//loop******************************************************************
 	if (argc==0) {
 		while (run){
@@ -555,5 +558,5 @@ void main(int argc, int argv[]) {
 		pthread_join(t_Servo[i],NULL);
 		printf("Thread %i/20 closed",i);
 	}
-	return 0
+	return 0;
 }
