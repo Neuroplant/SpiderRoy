@@ -4,7 +4,7 @@
 //(I will create a makefile as soon as I figure out how)
 
 #include <string.h>
-//#include "pca9685.h"
+#include <pca9685.h>
 #include <wiringPiI2C.h>
 #include <wiringPi.h>
 #include <stdio.h>
@@ -31,7 +31,7 @@ struct s_Servo {
 struct s_Servo Servo[20];
 pthread_t t_Servo[20];
 
-int run=0;
+int run=1;
 long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
     return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow;
 }
@@ -128,18 +128,18 @@ void WaitFor(int input) {
 
 		if (Servo[idNr].alt < Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
-				pwmWrite(Servo[idNr].pin,pwm);
+				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,4096));
 				delay(SLOWMO);
 			}
 		}
 		if (Servo[idNr].alt > Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm > Servo[idNr].neu;pwm--) {
-				pwmWrite(Servo[idNr].pin,pwm);
+				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,4096));
 				delay(SLOWMO);
 			}
 		}
 	   	Servo[idNr].alt=Servo[idNr].neu;
-    		WritePWM(Servo[idNr].pin,Servo[idNr].neu);
+    		WritePWM(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,4096));
 	}
 	  pthread_exit(NULL);
 }
@@ -516,7 +516,7 @@ void main(int argc, int argv[]) {
     	};
 	wiringPiI2CSetup (int I2CDEVID0);
 	wiringPiI2CSetup (int I2CDEVID1) ;
-/*	int fd0 = pca9685Setup(PIN_BASE0, I2CDEVID0, HERTZ);
+	int fd0 = pca9685Setup(PIN_BASE0, I2CDEVID0, HERTZ);
 	if (fd0 < 0){
 		printf("Error in setup\n");
 		return fd0;
@@ -529,7 +529,7 @@ void main(int argc, int argv[]) {
 	// Reset all output
 	pca9685PWMReset(fd0);
 	pca9685PWMReset(fd1);
-*/
+
 	setupServos(20);
 	}
 	
@@ -537,7 +537,7 @@ void main(int argc, int argv[]) {
 	*/
 	//loop******************************************************************
 	if (argc==0) {
-		while (run==0){
+		while (run){
 			//stand up
 	    		move(0,30);	    
 	    		//Idle dance
