@@ -528,7 +528,8 @@ int main(int argc, int argv[]) {
 		printf("Error in setup\n");
 		return fd1;
 	}
-	
+	pinMode(7,OUTPUT);
+	digitalWrite(7,LOW);
 	// Reset all output
 	pca9685PWMReset(fd0);
 	pca9685PWMReset(fd1);
