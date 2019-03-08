@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <stdbool.h>
 
 #define I2CDEVID0	0x40		//use "gpio i2cdetect" get Address
 #define PIN_BASE0 	300
@@ -21,17 +22,16 @@
 
 #define SLOMO 		100		// Bewegungsgeschwindigkeit
 
-struct s_Servo {
-    int pin;
-    int min;
-    int max;
-    int alt;
-    int neu;
-};
-struct s_Servo Servo[20];
-pthread_t t_Servo[20];
+//struct s_Servo {
+//    int pin;
+//    int min;
+//    int max;
+//    int alt;
+//    int neu;
+//};
 
-int run=1;
+
+bool run=true;
 long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
     return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow;
 }
@@ -44,7 +44,7 @@ void *ServoThread (void *arg) {
 	while (not pthread_equal(id,ServoNr[idNr]) idNr++;	//find idNr of this task
 	*/
 	int idNr = *((unsigned int *)arg);
-	while (run==0) {
+	while (run) {
 
 		if (Servo[idNr].alt < Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
@@ -246,15 +246,14 @@ void LegPos (int leg, int input) {
 		default :// halte Position
 		break;
 	}
-	
-Servo[leg*3+0].neu 	=	map(joint[leg*3+0],0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
+	Servo[leg*3+0].neu 	=	map(joint[leg*3+0],0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
 	Servo[leg*3+1].neu 	=	map(joint[leg*3+1],0,2,Servo[leg*3+1].min,Servo[leg*3+1].max);
-switch (joint[1]) {	//	change factor from 10 to adjust foot-segment
+	switch (joint[1]) {	//	change factor from 10 to adjust foot-segment
 		case 0 :
 			Servo[leg*3+2].neu 	=	map(joint[2]*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
 		break;
 		case 1 :
-Servo[leg*3+2].neu 	=	map(joint[2]*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
+			Servo[leg*3+2].neu 	=	map(joint[2]*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
 		break;
 		case 2 :
 			Servo[leg*3+2].neu 	=	map(joint[2]*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
@@ -529,10 +528,21 @@ int main(int argc, int argv[]) {
 		printf("Error in setup\n");
 		return fd1;
 	}
+	
 	// Reset all output
 	pca9685PWMReset(fd0);
 	pca9685PWMReset(fd1);
-
+	
+	//struct s_Servo Servo[20];
+	type_def struct s_Servo {
+		int pin;
+		int min;
+		int max;
+		int alt;
+		int neu;
+	}
+	s_Servo* Servo = malloc(20 * sizeof *Servo);
+	pthread_t t_Servo[20];
 	setupServos(20);
 	
 	
