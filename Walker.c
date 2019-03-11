@@ -21,14 +21,15 @@
 
 #define SLOMO 		100		// Bewegungsgeschwindigkeit
 
-//struct s_Servo {
-//    int pin;
-//    int min;
-//    int max;
-//    int alt;
-//    int neu;
-//};
-
+struct s_Servo {
+    int pin;
+    int min;
+    int max;
+    int alt;
+    int neu;
+};
+struct s_Servo Servo[20]; // = malloc(20 * sizeof *Servo);
+	pthread_t t_Servo[20];
 
 bool run=true;
 
@@ -39,7 +40,8 @@ void LegPos (int leg, int input);
 
 void *ServoThread (void *arg) {
 	int pwm;
-	int idNr = *((unsigned int *)arg);
+	long idNr = (long)arg;
+	printf("Starte Servo %i\n",idNr);
 	while (run) {
 
 		if (Servo[idNr].alt < Servo[idNr].neu) {
@@ -60,7 +62,7 @@ void *ServoThread (void *arg) {
 	  pthread_exit(NULL);
 }
 
-void setupServos(int j) {			
+void setupServos(void) {			
 	unsigned int i;				//get all the data for this section before
 	
 	Servo[0].pin	=	0 + PIN_BASE1;
@@ -143,7 +145,7 @@ void setupServos(int j) {
 	
 	for (i=0;i<=20;i++) {
 		pinMode(Servo[i].pin,OUTPUT);
-		pthread_create(&t_Servo[i],NULL,&ServoThread,&i);
+		pthread_create(&t_Servo[i],NULL,ServoThread, (void*)i);
 	}
 	
 }
@@ -543,39 +545,38 @@ int main(int argc, int argv[]) {
 	pca9685PWMReset(fd1);
 	
 	//struct s_Servo Servo[20];
-	type_def struct s_Servo {
-		int pin;
-		int min;
-		int max;
-		int alt;
-		int neu;
-	}
-	s_Servo* Servo = malloc(20 * sizeof *Servo);
-	pthread_t t_Servo[20];
-	setupServos(20);
+	
+	setupServos();
+
 	
 	
 			       
 	
 	//loop******************************************************************
-	if (argc==0) {
+	if (argc==1) {
+		printf("\n no Arguments: Idle Dance\n");
 		while (run){
 			//stand up
 	    		move(0,30);	    
 	    		//Idle dance
-	    		for (i=10;i<=13;i++) move(0,i);
-		}
+	    		for (i=10;i<=13;i++){
+					move(0,i);
+				}
+		}					printf("Dance Move %i",i);
+
 	}
+	printf("\n%i\n",argc);
 	//Parameter************************************************************
 	for (i=0;i<argc;i++) {
+		printf("Dance Move No%i\n",i);
 		move(0,argv[i]);
 	}
 		
 	//end******************************************************************
-	run=1;
+	run=false;
 	for (i=0;i<20;i++) {
 		pthread_join(t_Servo[i],NULL);
-		printf("Thread %i/20 closed",i);
+		printf("Thread %i/20 closed\n",i);
 	}
 	return 0;
 }
