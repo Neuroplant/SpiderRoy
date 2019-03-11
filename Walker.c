@@ -63,70 +63,83 @@ void *ServoThread (void *arg) {
 void setupServos(int j) {			
 	unsigned int i;				//get all the data for this section before
 	
-	Servo[0].pin	=	15 + PIN_BASE1;
-	Servo[1].pin	=	14 + PIN_BASE1;
-	Servo[2].pin	=	13 + PIN_BASE1;
-	Servo[3].pin	=	0 + PIN_BASE0;
-	Servo[4].pin	=	1 + PIN_BASE0;
-	Servo[5].pin	=	2 + PIN_BASE0;
-	Servo[6].pin	=	3 + PIN_BASE0;
-	Servo[7].pin	=	4 + PIN_BASE0;
-	Servo[8].pin	=	5 + PIN_BASE0;
-	Servo[9].pin	=	6 + PIN_BASE0;
-	Servo[10].pin	=	7 + PIN_BASE0;
-	Servo[11].pin	=	8 + PIN_BASE0;
-	Servo[12].pin	=	8 + PIN_BASE1;
-	Servo[13].pin	=	7 + PIN_BASE1;
-	Servo[14].pin	=	6 + PIN_BASE1;
-	Servo[15].pin	=	5 + PIN_BASE1;
-	Servo[16].pin	=	4 + PIN_BASE1;
-	Servo[17].pin	=	3 + PIN_BASE1;
-	Servo[18].pin	=	2 + PIN_BASE1;
-	Servo[19].pin	=	1 + PIN_BASE1;
-	Servo[20].pin	=	0 + PIN_BASE1;
+	Servo[0].pin	=	0 + PIN_BASE1;
+	Servo[1].pin	=	1 + PIN_BASE1;
+	Servo[2].pin	=	2 + PIN_BASE1; //not used
 	
-	Servo[0].min	=	5;
-	Servo[0].max	=	25;
-	Servo[1].min	=	5;
-	Servo[1].max	=	25;
-	Servo[2].min	=	10;
-	Servo[2].max	=	10;
-	Servo[3].min	=	10;
-	Servo[3].max	=	30;
+	Servo[3].pin	=	3 + PIN_BASE1;
+	Servo[4].pin	=	4 + PIN_BASE1;
+	Servo[5].pin	=	5 + PIN_BASE1;
+	
+	Servo[6].pin	=	0 + PIN_BASE0;
+	Servo[7].pin	=	1 + PIN_BASE0;
+	Servo[8].pin	=	2 + PIN_BASE0;
+	
+	Servo[9].pin	=	6 + PIN_BASE1;
+	Servo[10].pin	=	7 + PIN_BASE1;
+	Servo[11].pin	=	8 + PIN_BASE1;
+	
+	Servo[12].pin	=	3 + PIN_BASE0;
+	Servo[13].pin	=	4 + PIN_BASE0;
+	Servo[14].pin	=	5 + PIN_BASE0;
+	
+	Servo[15].pin	=	9 + PIN_BASE1;
+	Servo[16].pin	=	10 + PIN_BASE1;
+	Servo[17].pin	=	11 + PIN_BASE1;
+	
+	Servo[18].pin	=	6 + PIN_BASE0;
+	Servo[19].pin	=	7 + PIN_BASE0;
+	Servo[20].pin	=	8 + PIN_BASE0;
+	
+	
+	Servo[0].min	=	21;
+	Servo[0].max	=	27;
+	Servo[1].min	=	7;
+	Servo[1].max	=	21;
+	Servo[2].min	=	10;	//not used
+	Servo[2].max	=	10;	//not used
+	
+	Servo[3].min	=	5;
+	Servo[3].max	=	20;
 	Servo[4].min	=	5;
-	Servo[4].max	=	25;
+	Servo[4].max	=	27;
 	Servo[5].min	=	5;
-	Servo[5].max	=	25;
+	Servo[5].max	=	27;
+	
 	Servo[6].min	=	5;
-	Servo[6].max	=	23;
+	Servo[6].max	=	26;
 	Servo[7].min	=	5;
-	Servo[7].max	=	25;
+	Servo[7].max	=	27;
 	Servo[8].min	=	5;
-	Servo[8].max	=	25;
-	Servo[9].min	=	5;
-	Servo[9].max	=	25;
+	Servo[8].max	=	27;
+	
+	Servo[9].min	=	7;
+	Servo[9].max	=	22;
 	Servo[10].min	=	5;
-	Servo[10].max	=	25;
+	Servo[10].max	=	27;
 	Servo[11].min	=	5;
-	Servo[11].max	=	25;
-	Servo[12].min	=	5;
-	Servo[12].max	=	25;
+	Servo[11].max	=	27;
+	
+	Servo[12].min	=	10;
+	Servo[12].max	=	26;
 	Servo[13].min	=	5;
-	Servo[13].max	=	25;
+	Servo[13].max	=	27;
 	Servo[14].min	=	5;
-	Servo[14].max	=	25;
-	Servo[15].min	=	5;
-	Servo[15].max	=	25;
+	Servo[14].max	=	27;
+	
+	Servo[15].min	=	6;
+	Servo[15].max	=	26;
 	Servo[16].min	=	5;
-	Servo[16].max	=	25;
+	Servo[16].max	=	26;
 	Servo[17].min	=	5;
-	Servo[17].max	=	25;
-	Servo[18].min	=	5;
-	Servo[18].max	=	25;
+	Servo[17].max	=	26;
+	
+	Servo[18].min	=	12;
+	Servo[18].max	=	24;
 	Servo[19].min	=	5;
-	Servo[19].max	=	25;
+	Servo[19].max	=	27;
 	Servo[20].min	=	5;
-	Servo[20].max	=	25;
+	Servo[20].max	=	27;
 	
 	for (i=0;i<=20;i++) {
 		pinMode(Servo[i].pin,OUTPUT);
