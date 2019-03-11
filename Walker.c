@@ -1,7 +1,6 @@
 // SpiderRoy
 // V0.00.1
 //gcc RemoteCarIC.c -o Remote -lwiringPi -lm -lpthread 
-//(I will create a makefile as soon as I figure out how)
 
 #include <string.h>
 #include <pca9685.h>
@@ -32,6 +31,7 @@
 
 
 bool run=true;
+
 long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
     return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow;
 }
@@ -39,27 +39,23 @@ void LegPos (int leg, int input);
 
 void *ServoThread (void *arg) {
 	int pwm;
-	/*pthread_t id = pthread_self();
-	int idNr = 0;
-	while (not pthread_equal(id,ServoNr[idNr]) idNr++;	//find idNr of this task
-	*/
 	int idNr = *((unsigned int *)arg);
 	while (run) {
 
 		if (Servo[idNr].alt < Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
-				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,4096));
+				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,MAX_PWM));
 				delay(SLOMO);
 			}
 		}
 		if (Servo[idNr].alt > Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm > Servo[idNr].neu;pwm--) {
-				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,4096));
+				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,MAX_PWM));
 				delay(SLOMO);
 			}
 		}
 	   	Servo[idNr].alt=Servo[idNr].neu;
-    		pwmWrite(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,4096));
+    		pwmWrite(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,MAX_PWM));
 	}
 	  pthread_exit(NULL);
 }
@@ -132,10 +128,9 @@ void setupServos(int j) {
 	Servo[20].min	=	5;
 	Servo[20].max	=	25;
 	
-	for (i=0;i<=6;i++) {
-		pinMode(i,OUTPUT);
+	for (i=0;i<=20;i++) {
+		pinMode(Servo[i].pin,OUTPUT);
 		pthread_create(&t_Servo[i],NULL,&ServoThread,&i);
-		LegPos(i,5);
 	}
 	
 }
