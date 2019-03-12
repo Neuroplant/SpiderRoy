@@ -63,7 +63,7 @@ void *ServoThread (void *arg) {
 }
 
 void setupServos(void) {			
-	unsigned int i;				//get all the data for this section before
+	unsigned int i;				//get all the data for this section before with I2CServo-Check
 	
 	Servo[0].pin	=	0 + PIN_BASE1;
 	Servo[1].pin	=	1 + PIN_BASE1;
@@ -161,6 +161,7 @@ int legmoveCompleted(int leg) {
     for (i=0;i<=2;i++) {
         count = count + abs(Servo[leg*3+i].alt) - abs(Servo[leg*3+i].neu);
     }
+	printf(".");
     return count;
 }
 
@@ -560,18 +561,17 @@ int main(int argc, int argv[]) {
 	    		move(0,30);	    
 	    		//Idle dance
 	    		for (i=10;i<=13;i++){
-					move(0,i);
-				}
-		}					printf("Dance Move %i",i);
-
+				printf("Dance Move %i",i);
+				move(0,i);
+			}
+		}
 	}
 	printf("\n%i\n",argc);
 	//Parameter************************************************************
-	for (i=0;i<argc;i++) {
-		printf("Dance Move No%i\n",i);
-		move(0,argv[i]);
+	for (i=1;i<=argc;i++) {
+		printf(" %i/%i Dance Move %i\n",i,argc,argv[i]);
+		move(0,(int)argv[i]);
 	}
-		
 	//end******************************************************************
 	run=false;
 	for (i=0;i<20;i++) {
