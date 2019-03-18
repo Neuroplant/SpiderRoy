@@ -183,9 +183,9 @@ void LegPos (int leg, int input) {
 		default :// halte Position
 		break;
 	}
-	Servo[leg*3+0].neu 	=	map(joint[leg*3+0],0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
-	Servo[leg*3+1].neu 	=	map(joint[leg*3+1],0,2,Servo[leg*3+1].min,Servo[leg*3+1].max);
-	switch (joint[1]) {	//	change factor from 10 to adjust foot-segment
+	Servo[leg*3+0].neu 	=	map(joint[0],0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
+	Servo[leg*3+1].neu 	=	map(joint[1],0,2,Servo[leg*3+1].min,Servo[leg*3+1].max);
+	switch (joint[2]) {	//	change factor from 10 to adjust foot-segment
 		case 0 :
 			Servo[leg*3+2].neu 	=	map(joint[2]*10,0,20,Servo[leg*3+2].min,Servo[leg*3+2].max);
 		break;
@@ -445,9 +445,9 @@ int move(int leg, int pos) {
 	return 0;
 }
 
-int main(int argc, int argv[]) {
+int main(int argc, char* argv[]) {
 	//setup*****************************************************************
-	int i;
+	int i,dancestep;
 	// wiringPi
 	if(wiringPiSetup() == -1){ 
         	printf("setup wiringPi faiservo !");
@@ -495,8 +495,9 @@ int main(int argc, int argv[]) {
 	printf("\n%i\n",argc);
 	//Parameter************************************************************
 	for (i=1;i<=argc;i++) {
-		printf(" %i/%i Dance Move %i\n",i,argc,argv[i]);
-		move(0,(int)argv[i]);
+		dancestep = atoi(argv[i]);
+		printf(" %i/%i Dance Move %s(i)\n",i,argc,argv[i],dancestep);
+		move(0,dancestep);
 	}
 	//end******************************************************************
 	run=false;
