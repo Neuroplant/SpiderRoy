@@ -56,8 +56,9 @@ void *ServoThread (void *arg) {
 				delay(SLOMO);
 			}
 		}
-	   	Servo[idNr].alt=Servo[idNr].neu;
+	   	//Servo[idNr].alt=Servo[idNr].neu;
     		pwmWrite(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,MAX_PWM));
+		printf("Servo Nr %i:  PWM %i",idNr, Servo[idNr].neu);
 	}
 	  pthread_exit(NULL);
 }
