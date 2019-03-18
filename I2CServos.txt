@@ -4,85 +4,120 @@
  Servo[18].pin = 0 + PIN_BASE0; 
  Servo[18].min = 8; 
  Servo[18].max = 24; 
+ Servo[18].neu = 16;
 
  Servo[19].pin = 1 + PIN_BASE0; 
  Servo[19].min = 5; 
  Servo[19].max = 27; 
+  Servo[19].neu = 16;
+
 
  Servo[20].pin = 2 + PIN_BASE0; 
  Servo[20].min = 27; 
  Servo[20].max = 5; 
+  Servo[20].neu = 16;
+
 
  Servo[12].pin = 3 + PIN_BASE0; 
  Servo[12].min = 11; 
  Servo[12].max = 22; 
+  Servo[12].neu = 16;
+
 
  Servo[13].pin = 4 + PIN_BASE0; 
  Servo[13].min = 5; 
  Servo[13].max = 27; 
+  Servo[13].neu = 16;
+
 
  Servo[14].pin = 5 + PIN_BASE0; 
  Servo[14].min = 27; 
  Servo[14].max = 5; 
+  Servo[14].neu = 16;
+
 
  Servo[6].pin = 6 + PIN_BASE0; 
  Servo[6].min = 12; 
  Servo[6].max = 27; 
+  Servo[6].neu = 19;
+
 
  Servo[7].pin = 7 + PIN_BASE0; 
  Servo[7].min = 5; 
  Servo[7].max = 27; 
+  Servo[7].neu = 16;
+
 
  Servo[8].pin = 8 + PIN_BASE0; 
  Servo[8].min = 27; 
  Servo[8].max = 5; 
+  Servo[8].neu = 16;
+
 
 // Modul: 128
 
- Servo[0].pin = 17 + PIN_BASE1; 
+ Servo[0].pin = 0 + PIN_BASE1; 
  Servo[0].min = 11; 
- Servo[0].max = 26; 
+ Servo[0].max = 26;
+  Servo[18].neu = 19;
 
- Servo[1].pin = 18 + PIN_BASE1; 
+
+ Servo[1].pin = 1 + PIN_BASE1; 
  Servo[1].min = 5; 
  Servo[1].max = 19; 
+  Servo[1].neu = 12;
 
- Servo[3].pin = 20 + PIN_BASE1; 
+
+ Servo[3].pin = 3 + PIN_BASE1; 
  Servo[3].min = 21; 
  Servo[3].max = 7; 
+  Servo[3].neu = 14;
 
- Servo[4].pin = 21 + PIN_BASE1; 
+
+ Servo[4].pin = 4 + PIN_BASE1; 
  Servo[4].min = 27; 
  Servo[4].max = 5; 
+  Servo[4].neu = 16;
 
- Servo[5].pin = 22 + PIN_BASE1; 
+
+ Servo[5].pin = 5 + PIN_BASE1; 
  Servo[5].min = 5; 
  Servo[5].max = 27; 
+  Servo[5].neu = 16;
 
- Servo[9].pin = 23 + PIN_BASE1; 
+
+ Servo[9].pin = 6 + PIN_BASE1; 
  Servo[9].min = 22; 
  Servo[9].max = 7; 
+  Servo[9].neu = 14;
 
- Servo[10].pin = 24 + PIN_BASE1; 
+
+ Servo[10].pin = 7 + PIN_BASE1; 
  Servo[10].min = 27; 
  Servo[10].max = 5; 
+  Servo[10].neu = 16;
 
- Servo[11].pin = 25 + PIN_BASE1; 
+
+ Servo[11].pin = 8 + PIN_BASE1; 
  Servo[11].min = 5; 
  Servo[11].max = 27; 
+  Servo[11].neu = 16;
 
- Servo[15].pin = 26 + PIN_BASE1; 
+
+ Servo[15].pin = 9 + PIN_BASE1; 
  Servo[15].min = 26; 
  Servo[15].max = 8; 
+  Servo[15].neu = 17;
 
- Servo[16].pin = 27 + PIN_BASE1; 
+
+ Servo[16].pin = 10 + PIN_BASE1; 
  Servo[16].min = 27; 
  Servo[16].max = 5; 
+  Servo[16].neu = 16;
 
- Servo[17].pin = 28 + PIN_BASE1; 
+
+ Servo[17].pin = 11 + PIN_BASE1; 
  Servo[17].min = 5; 
  Servo[17].max = 27; 
+  Servo[18].neu = 16;
 
- Servo[0].pin = 33 + PIN_BASE1; 
- Servo[0].min = 0; 
- Servo[0].max = 0; 
