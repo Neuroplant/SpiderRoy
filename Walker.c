@@ -16,7 +16,7 @@
 #define I2CDEVID1	0x41		//use "gpio i2cdetect" get Address
 #define PIN_BASE1	320
 
-#define MAX_PWM 	4096
+#define MAX_PWM 	4095
 #define HERTZ 		50
 
 #define SLOMO 		100		// Bewegungsgeschwindigkeit
