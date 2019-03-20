@@ -44,6 +44,7 @@ void *ServoThread (void *value) {
 	printf("Starte Servo %i\n",idNr);
 	while (run) {
 
+	/*
 		if (Servo[idNr].alt < Servo[idNr].neu) {
 			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
 				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,MAX_PWM));
@@ -60,6 +61,7 @@ void *ServoThread (void *value) {
 			}
 			Servo[idNr].alt = Servo[idNr].neu;
 		}
+	*/
     		pwmWrite(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,MAX_PWM));
 		delay(SLOMO);
 	}
@@ -78,36 +80,6 @@ void setupServos(void) {
 	
 }
 
-void WaitFor(int value) {
-    while (value != 0) delay(SLOMO);
-    return;
-}
-
-
-int legmoveCompleted(int leg) {
-	int i, count = 1;
-	while (count != 0) {
-		count = 0;
-		for (i=0;i<=2;i++) {
-			count = count + abs((Servo[leg*3+i].alt) - (Servo[leg*3+i].neu));
-		}
-		//printf(".");
-		delay(SLOMO);
-	}
-	return count;
-}
-	
-	
-int allmoveCompleted(void) {
-	int i, count = 1;
-	while (count !=0) {
-		count = 0;
-		for (i=0;i<=6;i++) {
-			count = count + legmoveCompleted(i);
-		}
-	}
-	return count;
-}
 
 void LegPos (int leg, int input) {
     	int joint[3];
@@ -236,7 +208,7 @@ int move(int leg, int pos) {
 	break;
 	case 5 :
 		move(6,4);
-		allmoveCompleted();
+		delay(SLOMO);
 		move(1,3);
 		move(4,3);
 		move(5,3);
@@ -248,7 +220,7 @@ int move(int leg, int pos) {
 		move(1,4);
 		move(4,4);
 		move(5,4);
-		allmoveCompleted();
+		delay(SLOMO);
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -260,7 +232,7 @@ int move(int leg, int pos) {
 		move(2,4);
 		move(3,4);
 		move(6,4);
-		allmoveCompleted();
+		delay(SLOMO);
 		move(1,3);
 		move(4,3);
 		move(5,3);
@@ -272,7 +244,7 @@ int move(int leg, int pos) {
 		move(1,4);
 		move(4,4);
 		move(5,4);
-		allmoveCompleted();
+		delay(SLOMO);
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -282,29 +254,29 @@ int move(int leg, int pos) {
 	case 10 :	//a stomp
 		for (i=1;i<=6;i++){ 
 	        	LegPos(i,11);
-	        	legmoveCompleted(i);
+		delay(SLOMO);
 	        	LegPos(i,5);
-	        	legmoveCompleted(i);
+		delay(SLOMO);
 	    	}
 	break;
 	case 11:	//b stomp
 		for (i=6;i<=1;i--){ 
 	        	LegPos(i,11);
-	        	legmoveCompleted(i);
+		delay(SLOMO);
 	        	LegPos(i,5);
-	        	legmoveCompleted(i);
+		delay(SLOMO);
 	    	}
 	break;
 	case 12: 	//Räkeln
 		for (i=6;i<=1;i--){ 
 		        LegPos(i,14);
-		        legmoveCompleted(i);
+		delay(SLOMO);
 			LegPos(i,10);
-			legmoveCompleted(i);
+		delay(SLOMO);
 			LegPos(i,12);
-			legmoveCompleted(i);
+		delay(SLOMO);
 		        LegPos(i,5);
-		        legmoveCompleted(i);
+		delay(SLOMO);
 		}
 	break;
 	case 13 :	//schunkeln
@@ -315,62 +287,62 @@ int move(int leg, int pos) {
 		LegPos(4,1);
 		LegPos(5,1);
 		LegPos(6,2);
-		allmoveCompleted();
+		delay(SLOMO);
 		LegPos(1,1);
 		LegPos(2,2);
 		LegPos(3,1);
 		LegPos(4,1);
 		LegPos(5,0);
 		LegPos(6,1);
-		allmoveCompleted();
+		delay(SLOMO);
 		LegPos(1,1);
 		LegPos(2,1);
 		LegPos(3,2);
 		LegPos(4,0);
 		LegPos(5,1);
 		LegPos(6,1);
-		allmoveCompleted();
+		delay(SLOMO);
 		LegPos(1,2);
 		LegPos(2,1);
 		LegPos(3,1);
 		LegPos(4,1);
 		LegPos(5,1);
 		LegPos(6,0);
-		allmoveCompleted();
+		delay(SLOMO);
 		LegPos(1,1);
 		LegPos(2,2);
 		LegPos(3,1);
 		LegPos(4,1);
 		LegPos(5,0);
 		LegPos(6,1);
-		allmoveCompleted();
+		delay(SLOMO);
 		LegPos(1,1);
 		LegPos(2,1);
 		LegPos(3,0);
 		LegPos(4,2);
 		LegPos(5,1);
 		LegPos(6,1);
-		allmoveCompleted();
+		delay(SLOMO);
 	break;
 	//Head moves
 	
 	case 20 :	//Center
 		LegPos(0,5);
-		legmoveCompleted(leg);
+		delay(SLOMO);
 	break;
 	case 21 :	//Nod 
 		LegPos(0,8);
-		legmoveCompleted(leg);
+		delay(SLOMO);
 		LegPos(0,5);
-		legmoveCompleted(leg);
+		delay(SLOMO);
 	break;
 	case 22 :	//Shake 
 		LegPos(0,6);
-		legmoveCompleted(leg);
+		delay(SLOMO);
 		LegPos(0,7);
-		legmoveCompleted(leg);
+		delay(SLOMO);
 		LegPos(0,5);
-		legmoveCompleted(leg);
+		delay(SLOMO);
 	break;
 	case 23 :	//Sniff 
 	break;
@@ -385,7 +357,7 @@ int move(int leg, int pos) {
 		move(4,5);
 		move(5,2);
 		move(6,2);
-		allmoveCompleted();
+		delay(SLOMO*6);
 	break;
 	case 31 :	//a Schritt vor
 		move(1,1);
@@ -394,7 +366,7 @@ int move(int leg, int pos) {
 		move(2,4);
 		move(3,4);
 		move(6,4);
-		allmoveCompleted();
+		delay(SLOMO*6);
 		move(1,3);
 		move(4,3);
 		move(5,3);
@@ -406,7 +378,7 @@ int move(int leg, int pos) {
 		move(1,4);
 		move(4,4);
 		move(5,4);
-		allmoveCompleted();
+		delay(SLOMO*6);
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -418,7 +390,7 @@ int move(int leg, int pos) {
 		move(2,4);
 		move(3,4);
 		move(6,4);
-		allmoveCompleted();
+		delay(SLOMO*6);
 		move(1,3);
 		move(4,3);
 		move(5,3);
@@ -430,7 +402,7 @@ int move(int leg, int pos) {
 		move(1,4);
 		move(4,4);
 		move(5,4);
-		allmoveCompleted();
+		delay(SLOMO*6);
 		move(2,3);
 		move(3,3);
 		move(6,3);
@@ -442,7 +414,7 @@ int move(int leg, int pos) {
 		move(2,4);
 		move(3,4);
 		move(6,4);
-		allmoveCompleted();
+		delay(SLOMO*6);
 		move(2,3);
 		move(3,3);
 		move(6,3);
