@@ -19,7 +19,7 @@
 #define MAX_PWM 	4095
 #define HERTZ 		50
 
-#define SLOMO 		100		// Bewegungsgeschwindigkeit
+#define SLOMO 		200		// Bewegungsgeschwindigkeit
 
 struct s_Servo {
     int pin;
@@ -28,8 +28,8 @@ struct s_Servo {
     int alt;
     int neu;
 };
-struct s_Servo Servo[20]; // = malloc(20 * sizeof *Servo);
-	pthread_t t_Servo[20];
+struct s_Servo Servo[21]; // = malloc(20 * sizeof *Servo);
+	pthread_t t_Servo[21];
 
 bool run=true;
 
@@ -38,9 +38,9 @@ long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
 }
 void LegPos (int leg, int input);
 
-void *ServoThread (void *arg) {
+void *ServoThread (void *value) {
 	int pwm;
-	long idNr = (long)arg;
+	long idNr = (long)value;
 	printf("Starte Servo %i\n",idNr);
 	while (run) {
 
@@ -60,143 +60,17 @@ void *ServoThread (void *arg) {
 			}
 			Servo[idNr].alt = Servo[idNr].neu;
 		}
-	   	//Servo[idNr].alt=Servo[idNr].neu;
     		pwmWrite(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,MAX_PWM));
-		//printf("Servo Nr %i:  PWM %i\n",idNr, Servo[idNr].neu);
+		delay(SLOMO);
 	}
-	  pthread_exit(NULL);
+	pthread_exit(NULL);
 }
 
 void setupServos(void) {			
 	int i;				//insert the content of I2CServos.txt here,
 						//legs might break if you use these example values
+#inculude "I2CServos.txt"
 	
-
-// Modul: 64
-
- Servo[18].pin = 0 + PIN_BASE0; 
- Servo[18].min = 9; 
- Servo[18].max = 24; 
- Servo[18].neu = 16; 
-Servo[18].alt = 16; 
-
- Servo[19].pin = 1 + PIN_BASE0; 
- Servo[19].min = 5; 
- Servo[19].max = 27; 
- Servo[19].neu = 16; 
-Servo[19].alt = 16; 
-
- Servo[20].pin = 2 + PIN_BASE0; 
- Servo[20].min = 27; 
- Servo[20].max = 5; 
- Servo[20].neu = 16; 
-Servo[20].alt = 16; 
-
- Servo[12].pin = 3 + PIN_BASE0; 
- Servo[12].min = 11; 
- Servo[12].max = 24; 
- Servo[12].neu = 17; 
-Servo[12].alt = 17; 
-
- Servo[13].pin = 4 + PIN_BASE0; 
- Servo[13].min = 5; 
- Servo[13].max = 27; 
- Servo[13].neu = 16; 
-Servo[13].alt = 16; 
-
- Servo[14].pin = 5 + PIN_BASE0; 
- Servo[14].min = 27; 
- Servo[14].max = 5; 
- Servo[14].neu = 16; 
-Servo[14].alt = 16; 
-
- Servo[6].pin = 6 + PIN_BASE0; 
- Servo[6].min = 11; 
- Servo[6].max = 23; 
- Servo[6].neu = 17; 
-Servo[6].alt = 17; 
-
- Servo[7].pin = 7 + PIN_BASE0; 
- Servo[7].min = 5; 
- Servo[7].max = 27; 
- Servo[7].neu = 16; 
-Servo[7].alt = 16; 
-
- Servo[8].pin = 8 + PIN_BASE0; 
- Servo[8].min = 27; 
- Servo[8].max = 5; 
- Servo[8].neu = 16; 
-Servo[8].alt = 16; 
-
-// Modul: 128
-
- Servo[0].pin = 0 + PIN_BASE1; 
- Servo[0].min = 12; 
- Servo[0].max = 26; 
- Servo[0].neu = 19; 
-Servo[0].alt = 19; 
-
- Servo[1].pin = 1 + PIN_BASE1; 
- Servo[1].min = 5; 
- Servo[1].max = 18; 
- Servo[1].neu = 11; 
-Servo[1].alt = 11; 
-
- Servo[3].pin = 3 + PIN_BASE1; 
- Servo[3].min = 20; 
- Servo[3].max = 10; 
- Servo[3].neu = 15; 
-Servo[3].alt = 15; 
-
- Servo[4].pin = 4 + PIN_BASE1; 
- Servo[4].min = 27; 
- Servo[4].max = 5; 
- Servo[4].neu = 16; 
-Servo[4].alt = 16; 
-
- Servo[5].pin = 5 + PIN_BASE1; 
- Servo[5].min = 5; 
- Servo[5].max = 27; 
- Servo[5].neu = 16; 
-Servo[5].alt = 16; 
-
- Servo[9].pin = 6 + PIN_BASE1; 
- Servo[9].min = 21; 
- Servo[9].max = 6; 
- Servo[9].neu = 13; 
-Servo[9].alt = 13; 
-
- Servo[10].pin = 7 + PIN_BASE1; 
- Servo[10].min = 27; 
- Servo[10].max = 5; 
- Servo[10].neu = 16; 
-Servo[10].alt = 16; 
-
- Servo[11].pin = 8 + PIN_BASE1; 
- Servo[11].min = 5; 
- Servo[11].max = 27; 
- Servo[11].neu = 16; 
-Servo[11].alt = 16; 
-
- Servo[15].pin = 9 + PIN_BASE1; 
- Servo[15].min = 22; 
- Servo[15].max = 4; 
- Servo[15].neu = 13; 
-Servo[15].alt = 13; 
-
- Servo[16].pin = 10 + PIN_BASE1; 
- Servo[16].min = 27; 
- Servo[16].max = 5; 
- Servo[16].neu = 16; 
-Servo[16].alt = 16; 
-
- Servo[17].pin = 11 + PIN_BASE1; 
- Servo[17].min = 5; 
- Servo[17].max = 27; 
- Servo[17].neu = 16; 
-Servo[17].alt = 16; 
- 	
-
 	for (i=0;i<=20;i++) {
 		pinMode(Servo[i].pin,OUTPUT);
 		pthread_create(&t_Servo[i],NULL,ServoThread, (void*)i);
@@ -215,7 +89,7 @@ int legmoveCompleted(int leg) {
 	while (count != 0) {
 		count = 0;
 		for (i=0;i<=2;i++) {
-			count = count + abs(Servo[leg*3+i].alt) - abs(Servo[leg*3+i].neu);
+			count = count + abs((Servo[leg*3+i].alt) - (Servo[leg*3+i].neu));
 		}
 		//printf(".");
 		delay(SLOMO);
@@ -231,7 +105,6 @@ int allmoveCompleted(void) {
 		for (i=0;i<=6;i++) {
 			count = count + legmoveCompleted(i);
 		}
-		delay(SLOMO);
 	}
 	return count;
 }
