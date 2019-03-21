@@ -69,7 +69,7 @@ void *ServoThread (void *value) {
 void setupServos(void) {			
 	int i;				//insert the content of I2CServos.txt here,
 						//legs might break if you use these example values
-#inculude "I2CServos.txt"
+#include "I2CServos.txt"
 	
 	Servo[2].pin = 2 + PIN_BASE1; 	//Spare, maybe for a LED-Frontlight, a Claw, lets see
 	Servo[2].min = 5; 
@@ -471,6 +471,7 @@ int move(int leg, int pos) {
 		move(2,3);
 		move(3,3);
 		move(6,3);
+	break;
 	case 36	:	//b drehe rechts
 	break;
 	case 37 :	//a drehe links
