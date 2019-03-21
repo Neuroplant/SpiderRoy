@@ -71,7 +71,7 @@ void *ServoThread (void *value) {
 void setupServos(void) {			
 	int i;				//insert the content of I2CServos.txt here,
 						//legs might break if you use these example values
-#inculude "I2CServos.txt"
+#include "I2CServos.txt"
 	
 	for (i=0;i<=20;i++) {
 		pinMode(Servo[i].pin,OUTPUT);
@@ -480,7 +480,7 @@ int main(int argc, char* argv[]) {
 	}
 	printf("\n%i\n",argc);
 	//Parameter************************************************************
-	for (i=1;i<=argc;i++) {
+	for (i=1;i<argc;i++) {
 		dancestep = atoi(argv[i]);
 		printf(" %i/%i Dance Move %s(%i)\n",i,argc,argv[i],dancestep);
 		move(0,dancestep);
