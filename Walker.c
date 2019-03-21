@@ -248,7 +248,12 @@ int move(int leg, int pos) {
 		LegPos(leg, 8);
 			legmoveCompleted(leg);
 	break;
-	case 5 :
+	case 5 :	//a drehe rechts
+		move(1,1);
+		move(4,2);
+		move(5,1);
+		move(2,4);
+		move(3,4);
 		move(6,4);
 		allmoveCompleted();
 		move(1,3);
