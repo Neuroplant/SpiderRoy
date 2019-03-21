@@ -33,7 +33,7 @@ struct s_Servo Servo[21]; // = malloc(20 * sizeof *Servo);
 
 bool run=true;
 
-long map(long value,long fromLow,long fromHigh,long toLow,long toHigh){
+int map(int value,int fromLow,int fromHigh,int toLow,int toHigh){
     return (toHigh-toLow)*(value-fromLow) / (fromHigh-fromLow) + toLow;
 }
 void LegPos (int leg, int input);
@@ -113,84 +113,90 @@ void LegPos (int leg, int input) {
     	int joint[3];
 	
 	switch (input) {
-		case 0 : // halte Position
+		case 0 : // Neutral
+			joint[0] = 1;
+			joint[1] = 1;
+			joint[2] = 1;
 		break;
-		case 1 : // unten vorne stand
+		case 1 : // Vorne Unten Stand 
 		joint[0] = 0;
 		joint[1] = 0;
 		joint[2] = 1;
 		break;
-		case 2 : // unten mitte stand
+		case 2 : // Mitte Unten Stand 
 		joint[0] = 1;
 		joint[1] = 0;
 		joint[2] = 1;
 		break;
-		case 3 : // unten hinten stand
+		case 3 : // Hinten Unten Stand 
 		joint[0] = 2;
 		joint[1] = 0;
 		joint[2] = 1;
 		break;
-		case 4 : // mitte vorne stand
+		case 4 : // Vorne Mitte Stand 
 		joint[0] = 0;
 		joint[1] = 1;
 		joint[2] = 1;
 		break;
-		case 5 : // mitte mitte stand
+		case 5 : // Mitte Mitte Stand (Neutral)
 		joint[0] = 1;
 		joint[1] = 1;
 		joint[2] = 1;
 		break;
-		case 6 : // mitte hinten stand
+		case 6 : // Hinten Mitte Stand 
 		joint[0] = 2;
 		joint[1] = 1;
 		joint[2] = 1;
 		break; 
-		case 7 : // oben vorne stand
+		case 7 : // Vorne Hoch Stand 
 		joint[0] = 0;
 		joint[1] = 2;
 		joint[2] = 1;
 		break;
-		case 8 : // oben mitte stand
+		case 8 : // Mitte Hoch Stand 
 		joint[0] = 1;
 		joint[1] = 2;
 		joint[2] = 1;
 		break;
-		case 9 : // oben hinten stand
+		case 9 : // Hinten Hoch Stand 
 		joint[0] = 2;
 		joint[1] = 2;
 		joint[2] = 1;
 		break;
-		case 10 : // oben vorne gestreckt
+		case 10 : // Vorne Hoch Rein 
 		joint[0] = 0;
 		joint[1] = 2;
 		joint[2] = 0;
 		break;
-		case 11 : // oben mitte gestreckt
+		case 11 : // Mitte Hoch Rein 
 		joint[0] = 1;
 		joint[1] = 2;
 		joint[2] = 0;
 		break;
-		case 12 : // oben hinten gestreckt
+		case 12 : // Hinten Hoch Rein 
 		joint[0] = 2;
 		joint[1] = 2;
 		joint[2] = 0;
 		break;
-		case 13 : // unten vorne eingerollt
+		case 13 : // Vorne Unten Raus 
 		joint[0] = 0;
 		joint[1] = 0;
 		joint[2] = 2;
 		break;
-		case 14 : // unten mitte eingerollt
+		case 14 : // Mitte Unten Raus 
 		joint[0] = 1;
 		joint[1] = 0;
 		joint[2] = 2;
 		break;
-		case 15 : // unten hinten eingerollt
+		case 15 : // Hinten Unten Raus 
 		joint[0] = 2;
 		joint[1] = 0;
 		joint[2] = 2;
 		break;
-		default :// halte Position
+		default :// Neutral
+			joint[0] = 1;
+			joint[1] = 1;
+			joint[2] = 1;
 		break;
 	}
 	Servo[leg*3+0].neu 	=	map(joint[0],0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
@@ -220,19 +226,27 @@ int move(int leg, int pos) {
 	break;
 	case 1 :	//setze fuß vor
 		LegPos(leg, 8);
+			legmoveCompleted(leg);
 		LegPos(leg, 7);
+			legmoveCompleted(leg);
 		LegPos(leg, 4);
+			legmoveCompleted(leg);
 	break;
 	case 2 :	//setze fuß zurück
 		LegPos(leg, 8);
+			legmoveCompleted(leg);
 		LegPos(leg, 9);
+			legmoveCompleted(leg);
 		LegPos(leg, 6);
+			legmoveCompleted(leg);
 	break;
 	case 3 :	//ziehe fuß zur mitte
 		LegPos(leg, 5);
+			legmoveCompleted(leg);
 	break;
 	case 4 :	//hebe Fuß
 		LegPos(leg, 8);
+			legmoveCompleted(leg);
 	break;
 	case 5 :
 		move(6,4);
@@ -359,9 +373,9 @@ int move(int leg, int pos) {
 		legmoveCompleted(leg);
 	break;
 	case 21 :	//Nod 
-		LegPos(0,8);
+		LegPos(1,8);
 		legmoveCompleted(leg);
-		LegPos(0,5);
+		LegPos(1,5);
 		legmoveCompleted(leg);
 	break;
 	case 22 :	//Shake 
