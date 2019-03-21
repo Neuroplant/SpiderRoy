@@ -71,6 +71,12 @@ void setupServos(void) {
 						//legs might break if you use these example values
 #inculude "I2CServos.txt"
 	
+	Servo[2].pin = 2 + PIN_BASE1; 	//Spare, maybe for a LED-Frontlight, a Claw, lets see
+	Servo[2].min = 5; 
+ 	Servo[2].max = 18; 
+ 	Servo[2].neu = 11; 
+	Servo[2].alt = 11; 
+	
 	for (i=0;i<=20;i++) {
 		pinMode(Servo[i].pin,OUTPUT);
 		pthread_create(&t_Servo[i],NULL,ServoThread, (void*)i);
