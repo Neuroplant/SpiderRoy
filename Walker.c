@@ -48,7 +48,7 @@ void *ServoThread (void *value) {
 			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
 				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,MAX_PWM));
 				delay(SLOMO);
-				printf(" Servo %i < %i \n",idNr,Servo[idNr].neu);
+				printf(" Servo(%2i): %2i < %2i < %2i \n",idNr,Servo[idNr].neu,pwm,Servo[idNr].neu);
 			}
 			Servo[idNr].alt = Servo[idNr].neu;
 		}
@@ -56,7 +56,7 @@ void *ServoThread (void *value) {
 			for	(pwm = Servo[idNr].alt;pwm > Servo[idNr].neu;pwm--) {
 				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,MAX_PWM));
 				delay(SLOMO);
-				printf(" Servo %i > %i \n",idNr,Servo[idNr].neu);
+				printf(" Servo(%2i): %2i > %2i > %2i \n",idNr,Servo[idNr].neu,pwm,Servo[idNr].neu);
 			}
 			Servo[idNr].alt = Servo[idNr].neu;
 		}
@@ -199,6 +199,36 @@ void LegPos (int leg, int input) {
 		joint[1] = 0;
 		joint[2] = 2;
 		break;
+		case 16 : // Vorne Oben Raus 
+		joint[0] = 0;
+		joint[1] = 2;
+		joint[2] = 2;
+		break;
+		case 17 : // Mitte Oben Raus 
+		joint[0] = 1;
+		joint[1] = 2;
+		joint[2] = 2;
+		break;
+		case 18 : // Hinten Oben Raus 
+		joint[0] = 2;
+		joint[1] = 2;
+		joint[2] = 2;
+		break;
+		case 19 : // Vorne Unten Rein 
+		joint[0] = 0;
+		joint[1] = 0;
+		joint[2] = 0;
+		break;
+		case 20 : // Mitte Unten Rein  
+		joint[0] = 1;
+		joint[1] = 0;
+		joint[2] = 0;
+		break;
+		case 21 : // Hinten Unten Rein  
+		joint[0] = 2;
+		joint[1] = 0;
+		joint[2] = 0;
+		break;
 		default :// Neutral
 			joint[0] = 1;
 			joint[1] = 1;
@@ -305,28 +335,64 @@ int move(int leg, int pos) {
 	//Idle/Dance Moves
 	
 	case 10 :	//a stomp
-		for (i=1;i<=6;i++){ 
-	        	LegPos(i,11);
-	        	legmoveCompleted(i);
-	        	LegPos(i,5);
-	        	legmoveCompleted(i);
-	    	}
+	        	LegPos(1,11);
+	        	legmoveCompleted(1);
+	        	LegPos(1,5);
+	        	legmoveCompleted(1);
+			LegPos(3,11);
+	        	legmoveCompleted(3);
+	        	LegPos(3,5);
+	        	legmoveCompleted(3);
+			LegPos(5,11);
+	        	legmoveCompleted(5);
+	        	LegPos(5,5);
+	        	legmoveCompleted(5);
+			LegPos(6,11);
+	        	legmoveCompleted(6);
+	        	LegPos(6,5);
+	        	legmoveCompleted(6);
+			LegPos(4,11);
+	        	legmoveCompleted(64);
+	        	LegPos(4,5);
+	        	legmoveCompleted(4);
+			LegPos(2,11);
+	        	legmoveCompleted(2);
+	        	LegPos(2,5);
+	        	legmoveCompleted(2);
 	break;
 	case 11:	//b stomp
-		for (i=6;i<=1;i--){ 
-	        	LegPos(i,11);
-	        	legmoveCompleted(i);
-	        	LegPos(i,5);
-	        	legmoveCompleted(i);
-	    	}
+	        	LegPos(2,11);
+	        	legmoveCompleted(2);
+	        	LegPos(2,5);
+	        	legmoveCompleted(2);
+			LegPos(4,11);
+	        	legmoveCompleted(4);
+	        	LegPos(4,5);
+	        	legmoveCompleted(4);
+			LegPos(6,11);
+	        	legmoveCompleted(6);
+	        	LegPos(6,5);
+	        	legmoveCompleted(6);
+			LegPos(5,11);
+	        	legmoveCompleted(5);
+	        	LegPos(5,5);
+	        	legmoveCompleted(5);
+			LegPos(3,11);
+	        	legmoveCompleted(3);
+	        	LegPos(3,5);
+	        	legmoveCompleted(3);
+			LegPos(1,11);
+	        	legmoveCompleted(1);
+	        	LegPos(1,5);
+	        	legmoveCompleted(1);
 	break;
 	case 12: 	//Räkeln
 		for (i=6;i<=1;i--){ 
-		        LegPos(i,14);
+		        LegPos(i,20);
 		        legmoveCompleted(i);
-			LegPos(i,10);
+			LegPos(i,17);
 			legmoveCompleted(i);
-			LegPos(i,12);
+			LegPos(i,18);
 			legmoveCompleted(i);
 		        LegPos(i,5);
 		        legmoveCompleted(i);
@@ -334,47 +400,47 @@ int move(int leg, int pos) {
 	break;
 	case 13 :	//schunkeln
 		move(0,30);
-		LegPos(1,0);
-		LegPos(2,1);
-		LegPos(3,1);
-		LegPos(4,1);
-		LegPos(5,1);
-		LegPos(6,2);
-		allmoveCompleted();
 		LegPos(1,1);
-		LegPos(2,2);
-		LegPos(3,1);
+		LegPos(2,5);
+		LegPos(3,5);
+		LegPos(4,5);
+		LegPos(5,5);
+		LegPos(6,8);
+		allmoveCompleted();
+		LegPos(1,5);
+		LegPos(2,8);
+		LegPos(3,5);
+		LegPos(4,5);
+		LegPos(5,1);
+		LegPos(6,5);
+		allmoveCompleted();
+		LegPos(1,5);
+		LegPos(2,5);
+		LegPos(3,8);
 		LegPos(4,1);
-		LegPos(5,0);
+		LegPos(5,5);
+		LegPos(6,5);
+		allmoveCompleted();
+		LegPos(1,8);
+		LegPos(2,5);
+		LegPos(3,5);
+		LegPos(4,5);
+		LegPos(5,5);
 		LegPos(6,1);
 		allmoveCompleted();
-		LegPos(1,1);
-		LegPos(2,1);
-		LegPos(3,2);
-		LegPos(4,0);
+		LegPos(1,5);
+		LegPos(2,8);
+		LegPos(3,5);
+		LegPos(4,5);
 		LegPos(5,1);
-		LegPos(6,1);
+		LegPos(6,5);
 		allmoveCompleted();
-		LegPos(1,2);
-		LegPos(2,1);
+		LegPos(1,5);
+		LegPos(2,5);
 		LegPos(3,1);
-		LegPos(4,1);
-		LegPos(5,1);
-		LegPos(6,0);
-		allmoveCompleted();
-		LegPos(1,1);
-		LegPos(2,2);
-		LegPos(3,1);
-		LegPos(4,1);
-		LegPos(5,0);
-		LegPos(6,1);
-		allmoveCompleted();
-		LegPos(1,1);
-		LegPos(2,1);
-		LegPos(3,0);
-		LegPos(4,2);
-		LegPos(5,1);
-		LegPos(6,1);
+		LegPos(4,8);
+		LegPos(5,5);
+		LegPos(6,5);
 		allmoveCompleted();
 	break;
 	//Head moves
@@ -534,7 +600,7 @@ int main(int argc, char* argv[]) {
 	}
 	printf("\n%i\n",argc);
 	//Parameter************************************************************
-	for (i=1;i<=argc;i++) {
+	for (i=1;i<argc;i++) {
 		dancestep = atoi(argv[i]);
 		printf(" %i/%i Dance Move %s(%i)\n",i,argc,argv[i],dancestep);
 		move(0,dancestep);
