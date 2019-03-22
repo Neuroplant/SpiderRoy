@@ -261,28 +261,28 @@ int move(int leg, int pos) {
 		
 	break;
 	case 1 :	//setze fuß vor
+			legmoveCompleted(leg);
 		LegPos(leg, 8);
 			legmoveCompleted(leg);
 		LegPos(leg, 7);
 			legmoveCompleted(leg);
 		LegPos(leg, 4);
-			legmoveCompleted(leg);
 	break;
 	case 2 :	//setze fuß zurück
+			legmoveCompleted(leg);
 		LegPos(leg, 8);
 			legmoveCompleted(leg);
 		LegPos(leg, 9);
 			legmoveCompleted(leg);
 		LegPos(leg, 6);
-			legmoveCompleted(leg);
 	break;
 	case 3 :	//ziehe fuß zur mitte
-		LegPos(leg, 5);
 			legmoveCompleted(leg);
+		LegPos(leg, 5);
 	break;
 	case 4 :	//hebe Fuß
-		LegPos(leg, 8);
 			legmoveCompleted(leg);
+		LegPos(leg, 8);
 	break;
 	case 5 :	//a drehe rechts
 		move(1,1);
@@ -526,17 +526,18 @@ int move(int leg, int pos) {
 		move(3,3);
 		move(6,3);
 	break;
-	case 35 :	//a drehe rechts
-		move(1,1);
-		move(4,2);
-		move(5,1);
-		move(2,4);
-		move(3,4);
-		move(6,4);
-		allmoveCompleted();
-		move(2,3);
-		move(3,3);
-		move(6,3);
+	case 35 :	//Jump
+		for (int i=1;<=6;i++) {
+			LegPos(i,2);
+		}
+			allmoveCompleted();
+		for (int i=1;<=6;i++) {
+			LegPos(i,8);
+		}
+			for (int i=1;<=6;i++) {
+			LegPos(i,5);
+		}
+		
 	break;
 	case 36	:	//b drehe rechts
 	break;
