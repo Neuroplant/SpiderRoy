@@ -19,7 +19,7 @@
 #define MAX_PWM 	4095
 #define HERTZ 		50
 
-#define SLOMO 		200		// Bewegungsverzögerung
+#define SLOMO 		80		// Bewegungsverzögerung
 
 struct s_Servo {
     int pin;
@@ -335,29 +335,34 @@ int move(int leg, int pos) {
 	//Idle/Dance Moves
 	
 	case 10 :	//a stomp
-	        	LegPos(1,11);
+	        LegPos(1,11);
 	        	legmoveCompleted(1);
-	        	LegPos(1,5);
+	        LegPos(1,5);
 	        	legmoveCompleted(1);
+			
 			LegPos(3,11);
 	        	legmoveCompleted(3);
-	        	LegPos(3,5);
+	        LegPos(3,5);
 	        	legmoveCompleted(3);
+			
 			LegPos(5,11);
 	        	legmoveCompleted(5);
-	        	LegPos(5,5);
-	        	legmoveCompleted(5);
+	        LegPos(5,5);
+				legmoveCompleted(5);
+			
 			LegPos(6,11);
 	        	legmoveCompleted(6);
-	        	LegPos(6,5);
-	        	legmoveCompleted(6);
+	        LegPos(6,5);
+				legmoveCompleted(6);
+			
 			LegPos(4,11);
-	        	legmoveCompleted(64);
-	        	LegPos(4,5);
 	        	legmoveCompleted(4);
+	        LegPos(4,5);
+	        	legmoveCompleted(4);
+			
 			LegPos(2,11);
 	        	legmoveCompleted(2);
-	        	LegPos(2,5);
+	        LegPos(2,5);
 	        	legmoveCompleted(2);
 	break;
 	case 11:	//b stomp
@@ -387,16 +392,16 @@ int move(int leg, int pos) {
 	        	legmoveCompleted(1);
 	break;
 	case 12: 	//Räkeln
-		for (i=6;i<=1;i--){ 
-			legmoveCompleted(i);
-		        LegPos(i,20);
-		        legmoveCompleted(i);
+		for (i=6;i>=1;i--){ 
+		printf("Räkeln Bein %i",i);
+			LegPos(i,20);
+		    legmoveCompleted(i);
 			LegPos(i,17);
 			legmoveCompleted(i);
 			LegPos(i,18);
 			legmoveCompleted(i);
-		        LegPos(i,5);
-		        legmoveCompleted(i);
+		    LegPos(i,5);
+		    legmoveCompleted(i);
 		}
 	break;
 	case 13 :	//schunkeln
