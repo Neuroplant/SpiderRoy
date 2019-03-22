@@ -19,7 +19,7 @@
 #define MAX_PWM 	4095
 #define HERTZ 		50
 
-#define SLOMO 		200		// Bewegungsgeschwindigkeit
+#define SLOMO 		200		// Bewegungsverzögerung
 
 struct s_Servo {
     int pin;
@@ -388,6 +388,7 @@ int move(int leg, int pos) {
 	break;
 	case 12: 	//Räkeln
 		for (i=6;i<=1;i--){ 
+			legmoveCompleted(i);
 		        LegPos(i,20);
 		        legmoveCompleted(i);
 			LegPos(i,17);
@@ -447,21 +448,21 @@ int move(int leg, int pos) {
 	
 	case 20 :	//Center
 		LegPos(0,5);
-		legmoveCompleted(leg);
+		legmoveCompleted(0);
 	break;
 	case 21 :	//Nod 
 		LegPos(1,8);
-		legmoveCompleted(leg);
+		legmoveCompleted(1);
 		LegPos(1,5);
-		legmoveCompleted(leg);
+		legmoveCompleted(1);
 	break;
 	case 22 :	//Shake 
 		LegPos(0,6);
-		legmoveCompleted(leg);
+		legmoveCompleted(0);
 		LegPos(0,7);
-		legmoveCompleted(leg);
+		legmoveCompleted(0);
 		LegPos(0,5);
-		legmoveCompleted(leg);
+		legmoveCompleted(0);
 	break;
 	case 23 :	//Sniff 
 	break;
@@ -526,7 +527,7 @@ int move(int leg, int pos) {
 		move(3,3);
 		move(6,3);
 	break;
-	case 35 :	//Jump
+	case 14 :	//Jump
 		for (int i=1;<=6;i++) {
 			LegPos(i,2);
 		}
@@ -534,7 +535,7 @@ int move(int leg, int pos) {
 		for (int i=1;<=6;i++) {
 			LegPos(i,8);
 		}
-			for (int i=1;<=6;i++) {
+		for (int i=1;<=6;i++) {
 			LegPos(i,5);
 		}
 		
@@ -592,7 +593,7 @@ int main(int argc, char* argv[]) {
 			//stand up
 	    		move(0,30);	    
 	    		//Idle dance
-	    		for (i=10;i<=13;i++){
+	    		for (i=10;i<=14;i++){
 				printf("Dance Move %i",i);
 				move(0,i);
 				
