@@ -78,3 +78,33 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 	37	turn left a
 	38	turn left b
 
+# Beinhaltung (LegPos)
+		  0   ->   Neutral
+		  
+		  1   ->   Vorne Unten Stand 
+		  2   ->   Mitte Unten Stand 
+		  3   ->   Hinten Unten Stand 
+		  
+		  4   ->   Vorne Mitte Stand 
+		  5   ->   Mitte Mitte Stand (Neutral)
+		  6   ->   Hinten Mitte Stand 
+		  
+		  7   ->   Vorne Hoch Stand 
+		  8   ->   Mitte Hoch Stand 
+		  9   ->   Hinten Hoch Stand 
+		 
+		 10   ->   Vorne Hoch Rein 
+		 11   ->   Mitte Hoch Rein 
+		 12   ->   Hinten Hoch Rein 
+		 
+		 13   ->   Vorne Unten Raus 
+		 14   ->   Mitte Unten Raus 
+		 15   ->   Hinten Unten Raus 
+		 
+		 16   ->   Vorne Oben Raus 
+		 17   ->   Mitte Oben Raus 
+		 18   ->   Hinten Oben Raus 
+		 
+		 19   ->   Vorne Unten Rein 
+		 20   ->   Mitte Unten Rein  
+		 21   ->   Hinten Unten Rein  
