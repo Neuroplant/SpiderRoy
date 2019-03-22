@@ -451,15 +451,15 @@ int move(int leg, int pos) {
 		legmoveCompleted(0);
 	break;
 	case 21 :	//Nod 
-		LegPos(1,8);
-		legmoveCompleted(1);
-		LegPos(1,5);
-		legmoveCompleted(1);
+		LegPos(0,8);
+		legmoveCompleted(0);
+		LegPos(0,5);
+		legmoveCompleted(0);
 	break;
 	case 22 :	//Shake 
 		LegPos(0,6);
 		legmoveCompleted(0);
-		LegPos(0,7);
+		LegPos(0,4);
 		legmoveCompleted(0);
 		LegPos(0,5);
 		legmoveCompleted(0);
@@ -528,14 +528,14 @@ int move(int leg, int pos) {
 		move(6,3);
 	break;
 	case 14 :	//Jump
-		for (int i=1;<=6;i++) {
+		for (int i=1;i<=6;i++) {
 			LegPos(i,2);
 		}
 			allmoveCompleted();
-		for (int i=1;<=6;i++) {
+		for (int i=1;i<=6;i++) {
 			LegPos(i,8);
 		}
-		for (int i=1;<=6;i++) {
+		for (int i=1;i<=6;i++) {
 			LegPos(i,5);
 		}
 		
