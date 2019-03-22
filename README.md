@@ -5,10 +5,10 @@ self made Hexapod
 	2	16 Channel PWM board
 	20 	Microservo
 	1	Pappelsperrholz A3 3mm
-	Power Supply 5V e.g. 
+	Power Supply 5V (more than 2A!) e.g. 
 	2 	18650 Akku
 	1	Batteryholder 
-	1	Downstepper
+	1	Downstepper (5V 12A)
 
 #	ServoNr		BeinNr		JointNr
 
