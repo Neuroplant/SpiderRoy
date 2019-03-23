@@ -262,17 +262,17 @@ int move(int leg, int pos) {
 	break;
 	case 1 :	//setze fuß vor
 			legmoveCompleted(leg);
-		LegPos(leg, 8);
+		LegPos(leg, 11);
 			legmoveCompleted(leg);
-		LegPos(leg, 7);
+		LegPos(leg, 10);
 			legmoveCompleted(leg);
 		LegPos(leg, 4);
 	break;
 	case 2 :	//setze fuß zurück
 			legmoveCompleted(leg);
-		LegPos(leg, 8);
+		LegPos(leg, 11);
 			legmoveCompleted(leg);
-		LegPos(leg, 9);
+		LegPos(leg, 12);
 			legmoveCompleted(leg);
 		LegPos(leg, 6);
 	break;
@@ -392,59 +392,62 @@ int move(int leg, int pos) {
 	        	legmoveCompleted(1);
 	break;
 	case 12: 	//Räkeln
-		for (i=6;i>=1;i--){ 
+		for (i=6;i>=0;i--){ 
 		printf("Räkeln Bein %i",i);
-			LegPos(i,20);
+			LegPos(i,11);
 		    legmoveCompleted(i);
-			LegPos(i,17);
+			LegPos(i,20);
 			legmoveCompleted(i);
+			LegPos(i,11);
+			legmoveCompleted(i);
+		    LegPos(i,16);
+		    legmoveCompleted(i);
 			LegPos(i,18);
-			legmoveCompleted(i);
-		    LegPos(i,5);
+		    legmoveCompleted(i);
+			LegPos(i,5);
 		    legmoveCompleted(i);
 		}
 	break;
 	case 13 :	//schunkeln
-		move(0,30);
-		LegPos(1,1);
+		LegPos(1,11);
 		LegPos(2,5);
 		LegPos(3,5);
 		LegPos(4,5);
 		LegPos(5,5);
-		LegPos(6,8);
+		LegPos(6,14);
 		allmoveCompleted();
 		LegPos(1,5);
-		LegPos(2,8);
+		LegPos(2,14);
 		LegPos(3,5);
 		LegPos(4,5);
-		LegPos(5,1);
+		LegPos(5,11);
 		LegPos(6,5);
 		allmoveCompleted();
 		LegPos(1,5);
 		LegPos(2,5);
-		LegPos(3,8);
-		LegPos(4,1);
+		LegPos(3,14);
+		LegPos(4,11);
 		LegPos(5,5);
 		LegPos(6,5);
 		allmoveCompleted();
-		LegPos(1,8);
+		LegPos(1,14);
 		LegPos(2,5);
 		LegPos(3,5);
 		LegPos(4,5);
 		LegPos(5,5);
-		LegPos(6,1);
+		LegPos(6,11);
 		allmoveCompleted();
 		LegPos(1,5);
-		LegPos(2,8);
+		LegPos(2,14);
 		LegPos(3,5);
 		LegPos(4,5);
-		LegPos(5,1);
+		LegPos(5,11);
 		LegPos(6,5);
 		allmoveCompleted();
 		LegPos(1,5);
 		LegPos(2,5);
-		LegPos(3,1);
-		LegPos(4,8);
+		LegPos(3,11);
+		LegPos(4,14);
 		LegPos(5,5);
 		LegPos(6,5);
 		allmoveCompleted();
@@ -476,12 +479,12 @@ int move(int leg, int pos) {
 	case 25 :	//Center 
 	break;
 	case 30 :	//breitbeinig stellen
-		move(1,1);
-		move(2,1);
+		move(1,5);
+		move(2,5);
 		move(3,5);
 		move(4,5);
-		move(5,2);
-		move(6,2);
+		move(5,5);
+		move(6,5);
 		allmoveCompleted();
 	break;
 	case 31 :	//a Schritt vor
@@ -534,16 +537,25 @@ int move(int leg, int pos) {
 	break;
 	case 14 :	//Jump
 		for (int i=1;i<=6;i++) {
-			LegPos(i,2);
+			LegPos(i,11);
 		}
 			allmoveCompleted();
 		for (int i=1;i<=6;i++) {
-			LegPos(i,8);
+			LegPos(i,14);
 		}
+		allmoveCompleted();
 		for (int i=1;i<=6;i++) {
 			LegPos(i,5);
 		}
-		
+		allmoveCompleted();
+	break;
+	case 15 : //start position
+	for (int i =1; i <= 6 ;i++) {
+		LegPos(i,11);
+		legmoveCompleted(i);
+		LegPos(i,5);
+	}
+	allmoveCompleted();
 	break;
 	case 36	:	//b drehe rechts
 	break;
@@ -612,7 +624,10 @@ int main(int argc, char* argv[]) {
 		printf(" %i/%i Dance Move %s(%i)\n",i,argc,argv[i],dancestep);
 		move(0,dancestep);
 	}
+	
 	//end******************************************************************
+	
+	allmoveCompleted();
 	run=false;
 	for (i=0;i<20;i++) {
 		pthread_join(t_Servo[i],NULL);
