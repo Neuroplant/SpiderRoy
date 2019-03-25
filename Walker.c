@@ -421,10 +421,10 @@ int move(int leg, int pos) {
 			LegPos(i,11);
 		}
 			allmoveCompleted();
-		for (int i=1;i<=6;i++) {
-			LegPos(i,14);
-		}
-		allmoveCompleted();
+//		for (int i=1;i<=6;i++) {
+//			LegPos(i,14);
+//		}
+//		allmoveCompleted();
 		for (int i=1;i<=6;i++) {
 			LegPos(i,5);
 		}
