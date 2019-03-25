@@ -79,38 +79,46 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 	38	turn left b
 
 # Beinhaltung (LegPos)
+		  
 		  0   ->   Neutral
 		  
-		  1   ->   Vorne Unten Stand 
-		  2   ->   Mitte Unten Stand 
-		  3   ->   Hinten Unten Stand 
+		  1   ->   	Vorne	Unten	Stand 
+		  2   ->   	Mitte	Unten	Stand 
+		  3   ->   	Hinten	Unten	Stand 
+		  4   ->   	Vorne	Mitte	Stand 
+		  5   ->   	Mitte	Mitte	Stand (Neutral)
+		  6   ->   	Hinten	Mitte	Stand 
+		  7   ->   	Vorne	Hoch 	Stand 
+		  8   ->   	Mitte	Hoch	Stand 
+		  9   ->   	Hinten	Hoch	Stand 
 		  
-		  4   ->   Vorne Mitte Stand 
-		  5   ->   Mitte Mitte Stand (Neutral)
-		  6   ->   Hinten Mitte Stand 
-		  
-		  7   ->   Vorne Hoch Stand 
-		  8   ->   Mitte Hoch Stand 
-		  9   ->   Hinten Hoch Stand 
+		 10   ->   	Vorne	Hoch 	Rein 
+		 11   ->   	Mitte 	Hoch 	Rein 
+		 12   ->   	Hinten	Hoch	Rein 
+		 22   ->	Vorne	Mitte	Rein 
+		 23   ->	Mitte	Mitte	Rein 
+		 24   ->	Hinten 	Mitte	Rein 
+		 19   ->   	Vorne 	Unten 	Rein 
+		 20   ->   	Mitte 	Unten 	Rein  
+		 21   ->   	Hinten 	Unten 	Rein
+
 		 
-		 10   ->   Vorne Hoch Rein 
-		 11   ->   Mitte Hoch Rein 
-		 12   ->   Hinten Hoch Rein 
-		 
-		 13   ->   Vorne Unten Raus 
-		 14   ->   Mitte Unten Raus 
-		 15   ->   Hinten Unten Raus 
-		 
-		 16   ->   Vorne Oben Raus 
-		 17   ->   Mitte Oben Raus 
-		 18   ->   Hinten Oben Raus 
-		 
-		 19   ->   Vorne Unten Rein 
-		 20   ->   Mitte Unten Rein  
-		 21   ->   Hinten Unten Rein  
+		 16   ->   	Vorne 	Hoch 	Raus 
+		 17   ->   	Mitte 	Hoch 	Raus 
+		 18   ->   	Hinten 	Hoch 	Raus 
+		 25   ->	Vorne	Mitte	Raus 
+		 27   ->	Mitte	Mitte	Raus 
+		 28   ->	Hinten	Mitte	Raus 
+		 13   ->   	Vorne 	Unten 	Raus 
+		 14   ->   	Mitte 	Unten 	Raus 
+		 15   ->   	Hinten 	Unten 	Raus 
+
+  
 		 
 # Bewegungen
+
 	# Standard Bewegungen je Bein
+	
 		1  -> setze fuß vor
 		2  -> setze Fuß zur Mitte
 		3  -> setze fuß zurück
@@ -126,6 +134,7 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 		13 -> schunkeln
 		14 -> Jump
 		15 -> start position
+		16 -> Swim
 
 	# Head moves
 	
@@ -141,8 +150,8 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 		32  -> b Schritt vor
 		33  -> a schritt zurück
 		34  -> b schritt zurück
-		35	-> a drehe rechts
-		36	-> b drehe rechts
+		35  -> a drehe rechts
+		36  -> b drehe rechts
 		37  -> a drehe links
 		38  -> b drehe links
 		 
