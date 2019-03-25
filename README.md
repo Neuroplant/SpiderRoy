@@ -108,3 +108,41 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 		 19   ->   Vorne Unten Rein 
 		 20   ->   Mitte Unten Rein  
 		 21   ->   Hinten Unten Rein  
+		 
+# Bewegungen
+	# Standard Bewegungen je Bein
+		1  -> setze fuß vor
+		2  -> setze Fuß zur Mitte
+		3  -> setze fuß zurück
+		4  -> ziehe fuß vor
+		5  -> ziehe fuß zur mitte
+		6  -> ziehe fuß zurück
+		
+	# Dance Moves
+	
+		10 -> a stomp
+		11 -> b stomp
+		12 -> Räkeln
+		13 -> schunkeln
+		14 -> Jump
+		15 -> start position
+
+	# Head moves
+	
+		20  -> Center
+		21  -> Nod 
+		22  -> Shake 
+		23  -> Sniff 
+	
+	# Gehen
+	
+		30  -> breitbeinig stellen
+		31  -> a Schritt vor
+		32  -> b Schritt vor
+		33  -> a schritt zurück
+		34  -> b schritt zurück
+		35	-> a drehe rechts
+		36	-> b drehe rechts
+		37  -> a drehe links
+		38  -> b drehe links
+		 
