@@ -268,7 +268,13 @@ int move(int leg, int pos) {
 			legmoveCompleted(leg);
 		LegPos(leg, 4);
 	break;
-	case 2 :	//setze fuß zurück
+	case 2 :	//setze Fuß zur Mitte
+			legmoveCompleted(leg);
+		LegPos(leg, 11);
+			legmoveCompleted(leg);
+		LegPos(leg, 5);
+	break;
+	case 3 :	//setze fuß zurück
 			legmoveCompleted(leg);
 		LegPos(leg, 11);
 			legmoveCompleted(leg);
@@ -276,62 +282,20 @@ int move(int leg, int pos) {
 			legmoveCompleted(leg);
 		LegPos(leg, 6);
 	break;
-	case 3 :	//ziehe fuß zur mitte
-			legmoveCompleted(leg);
-		LegPos(leg, 5);
+	case 4 :	//ziehe fuß vor
+		legmoveCompleted(leg);
+	LegPos(leg, 4);
 	break;
-	case 4 :	//hebe Fuß
-			legmoveCompleted(leg);
-		LegPos(leg, 8);
+	case 5 :	//ziehe fuß zur mitte
+		legmoveCompleted(leg);
+	LegPos(leg, 5);
 	break;
-	case 5 :	//a drehe rechts
-		move(1,1);
-		move(4,2);
-		move(5,1);
-		move(2,4);
-		move(3,4);
-		move(6,4);
-		allmoveCompleted();
-		move(1,3);
-		move(4,3);
-		move(5,3);
+	case 6 :	//ziehe fuß zurück
+		legmoveCompleted(leg);
+	LegPos(leg, 6);
 	break;
-	case 6 :	//b drehe rechts
-		move(2,2);
-		move(3,1);
-		move(6,2);
-		move(1,4);
-		move(4,4);
-		move(5,4);
-		allmoveCompleted();
-		move(2,3);
-		move(3,3);
-		move(6,3);
-	break;
-	case 7 :	//a drehe links
-		move(1,2);
-		move(4,1);
-		move(5,2);
-		move(2,4);
-		move(3,4);
-		move(6,4);
-		allmoveCompleted();
-		move(1,3);
-		move(4,3);
-		move(5,3);
-	break;
-	case 8 :	//b drehe links
-		move(2,1);
-		move(3,2);
-		move(6,1);
-		move(1,4);
-		move(4,4);
-		move(5,4);
-		allmoveCompleted();
-		move(2,3);
-		move(3,3);
-		move(6,3);
-	break;
+	
+	
 	//Idle/Dance Moves
 	
 	case 10 :	//a stomp
@@ -452,89 +416,6 @@ int move(int leg, int pos) {
 		LegPos(6,5);
 		allmoveCompleted();
 	break;
-	//Head moves
-	
-	case 20 :	//Center
-		LegPos(0,5);
-		legmoveCompleted(0);
-	break;
-	case 21 :	//Nod 
-		LegPos(0,8);
-		legmoveCompleted(0);
-		LegPos(0,5);
-		legmoveCompleted(0);
-	break;
-	case 22 :	//Shake 
-		LegPos(0,6);
-		legmoveCompleted(0);
-		LegPos(0,4);
-		legmoveCompleted(0);
-		LegPos(0,5);
-		legmoveCompleted(0);
-	break;
-	case 23 :	//Sniff 
-	break;
-	case 24 :	//Center 
-	break;
-	case 25 :	//Center 
-	break;
-	case 30 :	//breitbeinig stellen
-		move(1,5);
-		move(2,5);
-		move(3,5);
-		move(4,5);
-		move(5,5);
-		move(6,5);
-		allmoveCompleted();
-	break;
-	case 31 :	//a Schritt vor
-		move(1,1);
-		move(4,1);
-		move(5,1);
-		move(2,4);
-		move(3,4);
-		move(6,4);
-		allmoveCompleted();
-		move(1,3);
-		move(4,3);
-		move(5,3);
-	break;
-	case 32 :	//b Schritt vor
-		move(2,1);
-		move(3,1);
-		move(6,1);
-		move(1,4);
-		move(4,4);
-		move(5,4);
-		allmoveCompleted();
-		move(2,3);
-		move(3,3);
-		move(6,3);
-	break;
-	case 33 :	//a schritt zurück
-		move(1,2);
-		move(4,2);
-		move(5,2);
-		move(2,4);
-		move(3,4);
-		move(6,4);
-		allmoveCompleted();
-		move(1,3);
-		move(4,3);
-		move(5,3);
-	break;
-	case 34 :	//b schritt zurück
-		move(2,2);
-		move(3,2);
-		move(6,2);
-		move(1,4);
-		move(4,4);
-		move(5,4);
-		allmoveCompleted();
-		move(2,3);
-		move(3,3);
-		move(6,3);
-	break;
 	case 14 :	//Jump
 		for (int i=1;i<=6;i++) {
 			LegPos(i,11);
@@ -557,12 +438,157 @@ int move(int leg, int pos) {
 	}
 	allmoveCompleted();
 	break;
-	case 36	:	//b drehe rechts
+	//Head moves
+	
+	case 20 :	//Center
+		LegPos(0,5);
+		legmoveCompleted(0);
+	break;
+	case 21 :	//Nod 
+		legmoveCompleted(0);
+		LegPos(0,8);
+		legmoveCompleted(0);
+		LegPos(0,2);
+		legmoveCompleted(0);
+		LegPos(0,5);
+	break;
+	case 22 :	//Shake 
+		legmoveCompleted(0);
+		LegPos(0,6);
+		legmoveCompleted(0);
+		LegPos(0,4);
+		legmoveCompleted(0);
+		LegPos(0,5);
+	break;
+	case 23 :	//Sniff 
+	break;
+	case 24 :	//Center 
+	break;
+	case 25 :	//Center 
+	break;
+	case 30 :	//breitbeinig stellen
+		move(1,5);
+		move(2,5);
+		move(3,5);
+		move(4,5);
+		move(5,5);
+		move(6,5);
+		allmoveCompleted();
+	break;
+	case 31 :	//a Schritt vor
+		allmoveCompleted();
+		move(1,1);
+		move(4,1);
+		move(5,1);
+		allmoveCompleted();
+		LegPos(2,11);
+		LegPos(3,11);
+		LegPos(6,11);
+		allmoveCompleted();
+		move(1,6);
+		move(4,6);
+		move(5,6);
+	break;
+	case 32 :	//b Schritt vor
+		allmoveCompleted();
+		move(2,1);
+		move(3,1);
+		move(6,1);
+		allmoveCompleted();
+		LegPos(1,11);
+		LegPos(4,11);
+		LegPos(5,11);
+		allmoveCompleted();
+		move(2,6);
+		move(3,6);
+		move(6,6);
+	break;
+	case 33 :	//a schritt zurück
+		allmoveCompleted();
+		move(1,3);
+		move(4,3);
+		move(5,3);
+		allmoveCompleted();
+		LegPos(2,11);
+		LegPos(3,11);
+		LegPos(6,11);
+		allmoveCompleted();
+		move(1,4);
+		move(4,4);
+		move(5,4);
+	break;
+	case 34 :	//b schritt zurück
+		allmoveCompleted();
+		move(2,3);
+		move(3,3);
+		move(6,3);
+		allmoveCompleted();
+		LegPos(1,11);
+		LegPos(4,11);
+		LegPos(5,11);
+		allmoveCompleted();
+		move(2,4);
+		move(3,4);
+		move(6,4);
+	break;
+	case 35 :	//a drehe rechts
+		allmoveCompleted();
+		move(1,1);
+		move(4,3);
+		move(5,1);
+		allmoveCompleted();
+		LegPos(2,11);
+		LegPos(3,11);
+		LegPos(6,11);
+		allmoveCompleted();
+		move(1,6);
+		move(4,4);
+		move(5,6);
+	break;
+	case 36 :	//b drehe rechts
+		allmoveCompleted();
+		move(2,3);
+		move(3,1);
+		move(6,3);
+		allmoveCompleted();
+		LegPos(1,11);
+		LegPos(4,11);
+		LegPos(5,11);
+		allmoveCompleted();
+		move(2,4);
+		move(3,6);
+		move(6,4);
 	break;
 	case 37 :	//a drehe links
+		allmoveCompleted();
+		move(1,3);
+		move(4,1);
+		move(5,3);
+		allmoveCompleted();
+		LegPos(2,11);
+		LegPos(3,11);
+		LegPos(6,11);
+		allmoveCompleted();
+		move(1,4);
+		move(4,6);
+		move(5,4);
 	break;
 	case 38 :	//b drehe links
+		allmoveCompleted();
+		move(2,1);
+		move(3,3);
+		move(6,1);
+		allmoveCompleted();
+		LegPos(1,11);
+		LegPos(4,11);
+		LegPos(5,11);
+		allmoveCompleted();
+		move(2,6);
+		move(3,4);
+		move(6,6);
 	break;
+	
+	
 	default:
 	break;
 	}
