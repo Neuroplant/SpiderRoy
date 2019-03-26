@@ -27,10 +27,12 @@ struct s_Servo {
     int max;
     int alt;
     int neu;
+	int current;
 };
 struct s_Servo Servo[21]; // = malloc(20 * sizeof *Servo);
-	pthread_t t_Servo[21];
 
+pthread_t t_Servo[21];
+pthread_t t_Display;
 bool run=true;
 
 int map(int value,int fromLow,int fromHigh,int toLow,int toHigh){
@@ -45,23 +47,41 @@ void *ServoThread (void *value) {
 	while (run) {
 
 		if (Servo[idNr].alt < Servo[idNr].neu) {
-			for	(pwm = Servo[idNr].alt;pwm < Servo[idNr].neu;pwm++) {
-				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,MAX_PWM));
+			for	(Servo[idNr].current = Servo[idNr].alt;Servo[idNr].current < Servo[idNr].neu;Servo[idNr].current++) {
+				pwmWrite(Servo[idNr].pin,map (Servo[idNr].current,0,200,0,MAX_PWM));
 				delay(SLOMO);
-				printf(" Servo(%2i): %2i < %2i < %2i \n",idNr,Servo[idNr].neu,pwm,Servo[idNr].neu);
+				printf(" Servo(%2i): %2i < %2i < %2i \n",idNr,Servo[idNr].neu,Servo[idNr].current,Servo[idNr].neu);
 			}
-			Servo[idNr].alt = Servo[idNr].neu;
+			Servo[idNr].current = Servo[idNr].alt = Servo[idNr].neu;
 		}
 		if (Servo[idNr].alt > Servo[idNr].neu) {
-			for	(pwm = Servo[idNr].alt;pwm > Servo[idNr].neu;pwm--) {
-				pwmWrite(Servo[idNr].pin,map (pwm,0,200,0,MAX_PWM));
+			for	(Servo[idNr].current = Servo[idNr].alt;Servo[idNr].current > Servo[idNr].neu;Servo[idNr].current--) {
+				pwmWrite(Servo[idNr].pin,map (Servo[idNr].current,0,200,0,MAX_PWM));
 				delay(SLOMO);
-				printf(" Servo(%2i): %2i > %2i > %2i \n",idNr,Servo[idNr].neu,pwm,Servo[idNr].neu);
+				printf(" Servo(%2i): %2i > %2i > %2i \n",idNr,Servo[idNr].neu,Servo[idNr].current,Servo[idNr].neu);
 			}
-			Servo[idNr].alt = Servo[idNr].neu;
+			Servo[idNr].current = Servo[idNr].alt = Servo[idNr].neu ;
 		}
-    		pwmWrite(Servo[idNr].pin,map (Servo[idNr].neu,0,200,0,MAX_PWM));
+    		pwmWrite(Servo[idNr].pin,map (Servo[idNr].current,0,200,0,MAX_PWM));
 		delay(SLOMO);
+	}
+	pthread_exit(NULL);
+}
+void *DisplayThrad (void *value) {
+	while(run) {
+		system(clrscr);
+		for (int i=0;i<=27;i++) {
+			printf("\n");
+			for (int j=0;j<21;j++) {
+				if 	(Servo[j].min==i) {	printf("-"); }
+				else {if Servo[j].max==i) {	printf("-"); }
+				else {if Servo[j].neu==i) {	printf("x"); }
+				else {if Servo[j].alt==i) {	printf("x"); }
+				else {if Servo[j].current==i) {	printf("o"); }
+				else {printf(" ");      
+				}}}}}
+			}
+		}
 	}
 	pthread_exit(NULL);
 }
@@ -255,19 +275,17 @@ void LegPos (int leg, int input) {
 
 int move(int leg, int pos) {
 	int i;
-	
 	switch (pos) {
-	case 0 :	
-		
-	break;
-	case 1 :	//setze fuß vor
-			legmoveCompleted(leg);
-		LegPos(leg, 11);
-			legmoveCompleted(leg);
-		LegPos(leg, 10);
-			legmoveCompleted(leg);
-		LegPos(leg, 4);
-	break;
+			case 0 :
+			break;
+			case 1 :	//setze fuß vor
+				legmoveCompleted(leg);
+				LegPos(leg, 11);
+				legmoveCompleted(leg);
+				LegPos(leg, 10);
+				legmoveCompleted(leg);
+				LegPos(leg, 4);
+			break;
 	case 2 :	//setze Fuß zur Mitte
 			legmoveCompleted(leg);
 		LegPos(leg, 11);
@@ -587,7 +605,34 @@ int move(int leg, int pos) {
 		move(3,4);
 		move(6,6);
 	break;
-	
+	case 39 :	//Catapillar
+		move(1,1);
+		move(2,1);
+			allmoveCompleted();
+		move(1,5);
+		move(2,5);
+		move(3,1);
+		move(4,1);
+		move(5,6);
+		move(6,6);
+			allmoveCompleted();
+		move(1,6);
+		move(2,6);
+		move(3,5);
+		move(4,5);
+		move(5,1);
+		move(6,1);
+			allmoveCompleted();
+		move(1,1);
+		move(2,1);
+		move(3,6);
+		move(4,6);
+		move(5,5);
+		move(6,5);
+			allmoveCompleted();
+	break;
+			
+			
 	
 	default:
 	break;
@@ -624,6 +669,7 @@ int main(int argc, char* argv[]) {
 	//struct s_Servo Servo[20];
 	
 	setupServos();
+	pthread_create(&t_Display,NULL,DisplayThread, (void*)NULL);
 
 	
 	
