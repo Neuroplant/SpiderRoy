@@ -1,0 +1,125 @@
+void LegPos (int leg, int input) {
+    	int joint[3];
+	
+	switch (input) {
+		case 0 : // Neutral
+			joint[0] = 1;
+			joint[1] = 1;
+			joint[2] = 1;
+		break;
+		case 1 : // Vorne Unten Stand 
+		joint[0] = 0;
+		joint[1] = 0;
+		joint[2] = 1;
+		break;
+		case 2 : // Mitte Unten Stand 
+		joint[0] = 1;
+		joint[1] = 0;
+		joint[2] = 1;
+		break;
+		case 3 : // Hinten Unten Stand 
+		joint[0] = 2;
+		joint[1] = 0;
+		joint[2] = 1;
+		break;
+		case 4 : // Vorne Mitte Stand 
+		joint[0] = 0;
+		joint[1] = 1;
+		joint[2] = 1;
+		break;
+		case 5 : // Mitte Mitte Stand (Neutral)
+		joint[0] = 1;
+		joint[1] = 1;
+		joint[2] = 1;
+		break;
+		case 6 : // Hinten Mitte Stand 
+		joint[0] = 2;
+		joint[1] = 1;
+		joint[2] = 1;
+		break; 
+		case 7 : // Vorne Hoch Stand 
+		joint[0] = 0;
+		joint[1] = 2;
+		joint[2] = 1;
+		break;
+		case 8 : // Mitte Hoch Stand 
+		joint[0] = 1;
+		joint[1] = 2;
+		joint[2] = 1;
+		break;
+		case 9 : // Hinten Hoch Stand 
+		joint[0] = 2;
+		joint[1] = 2;
+		joint[2] = 1;
+		break;
+		case 10 : // Vorne Hoch Rein 
+		joint[0] = 0;
+		joint[1] = 2;
+		joint[2] = 0;
+		break;
+		case 11 : // Mitte Hoch Rein 
+		joint[0] = 1;
+		joint[1] = 2;
+		joint[2] = 0;
+		break;
+		case 12 : // Hinten Hoch Rein 
+		joint[0] = 2;
+		joint[1] = 2;
+		joint[2] = 0;
+		break;
+		case 13 : // Vorne Unten Raus 
+		joint[0] = 0;
+		joint[1] = 0;
+		joint[2] = 2;
+		break;
+		case 14 : // Mitte Unten Raus 
+		joint[0] = 1;
+		joint[1] = 0;
+		joint[2] = 2;
+		break;
+		case 15 : // Hinten Unten Raus 
+		joint[0] = 2;
+		joint[1] = 0;
+		joint[2] = 2;
+		break;
+		case 16 : // Vorne Oben Raus 
+		joint[0] = 0;
+		joint[1] = 2;
+		joint[2] = 2;
+		break;
+		case 17 : // Mitte Oben Raus 
+		joint[0] = 1;
+		joint[1] = 2;
+		joint[2] = 2;
+		break;
+		case 18 : // Hinten Oben Raus 
+		joint[0] = 2;
+		joint[1] = 2;
+		joint[2] = 2;
+		break;
+		case 19 : // Vorne Unten Rein 
+		joint[0] = 0;
+		joint[1] = 0;
+		joint[2] = 0;
+		break;
+		case 20 : // Mitte Unten Rein  
+		joint[0] = 1;
+		joint[1] = 0;
+		joint[2] = 0;
+		break;
+		case 21 : // Hinten Unten Rein  
+		joint[0] = 2;
+		joint[1] = 0;
+		joint[2] = 0;
+		break;
+		default :// Neutral
+			joint[0] = 1;
+			joint[1] = 1;
+			joint[2] = 1;
+		break;
+	}
+	Servo[leg*3+0].neu 	=	map(joint[0],0,2,Servo[leg*3+0].min,Servo[leg*3+0].max);
+	Servo[leg*3+1].neu 	=	map(joint[1],0,2,Servo[leg*3+1].min,Servo[leg*3+1].max);
+	Servo[leg*3+2].neu 	=	map(joint[2],0,2,Servo[leg*3+2].min,Servo[leg*3+2].max);
+
+}
