@@ -356,9 +356,28 @@ int move(int leg, int pos) {
 		move(6,5);
 			allmoveCompleted();
 	break;
-			
-			
-	
+	//vierfuss 
+	case 40 : 	//Grundstellung 
+		LegPos(1,5);
+		LegPos(2,5);
+		LegPos(3,11);
+		LegPos(4,11);
+		LegPos(5,5);
+		LegPos(6,5);
+			allmoveCompleted();
+	break;
+	case 41 :	//Vor
+		move(1,1);
+		move(6,1);
+		move(2,6);
+		move(5,6);
+			allmoveCompleted();
+		move(1,6);
+		move(6,6);
+		move(2,1);
+		move(5,1);
+			allmoveCompleted();
+		
 	default:
 	break;
 	}
