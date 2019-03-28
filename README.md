@@ -10,6 +10,7 @@ This prog helps you to set the minimum and maximum for each servo.
 Let me mention, for the Shoulder-Servo min means to the back and min means to the front,
 for the upper arm min is down and max is up,
 for the lower arm/foot min is close to the body max is away from the body.
+Another thing this program helps you with is to identify the servos, see "ServoPosition.png" for the Servo numbers.
 The program creates a file named "I2CServos.txt" that you have to copy to the SpiderRoy folder befor compiling.
 
 #	Hardware
