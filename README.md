@@ -1,5 +1,17 @@
 SpiderRoy
 self made Hexapod
+# 	Intro
+
+Before assembling SpiderRoy and the servos it will be usefull to bring all Servos to middle position.
+To help you with this I wrote "servo-helper" all this prog does is to set the servos to the middle.
+
+After assembling the hexapod you will have to run "I2CServoCheck". 
+This prog helps you to set the minimum and maximum for each servo.
+Let me mention, for the Shoulder-Servo min means to the back and min means to the front,
+for the upper arm min is down and max is up,
+for the lower arm/foot min is close to the body max is away from the body.
+The program creates a file named "I2CServos.txt" that you have to copy to the SpiderRoy folder befor compiling.
+
 #	Hardware
 	1	RaspberryPI
 	2	16 Channel PWM board
