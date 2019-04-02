@@ -3,9 +3,9 @@ self made Hexapod
 # 	Intro
 
 Before assembling SpiderRoy and the servos it will be usefull to bring all Servos to middle position.
-To help you with this I wrote "servo-helper" all this prog does is to set the servos to the middle.
+To help you with this I wrote "ServoInit" all this prog does is to set the servos to the middle.
 
-After assembling the hexapod you will have to run "I2CServoCheck". 
+After assembling the hexapod you will have to run "ServoData". 
 This prog helps you to set the minimum and maximum for each servo.
 Let me mention, for the Shoulder-Servo min means to the back and min means to the front,
 for the upper arm min is down and max is up,
