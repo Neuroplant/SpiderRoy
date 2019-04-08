@@ -68,8 +68,19 @@ Die	Nummer eines Servos ist somit = BeinNr*3 + JointNr
 
 	Prerequisites:
 	http://wiringpi.com/download-and-install/
-	...
-	gcc Walker.c -o Walker -lwiringPi -lm -lpthread
+	
+	1. Connect I2C PWM Board to Raspberry
+	"make ServoInit"
+	"sudo ./ServoInit"
+	connect all Servos one by one to the Board to move them to middle Position.
+	
+	2. Assemble Spiderroy
+	"make ServoData"
+	"sudo ./Servodata"
+	Set the min/max and Number for all Servos
+	
+	3. "make Walker"
+	"sudo ./Walker 12"
 	
 # Usage:
 	
