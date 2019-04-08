@@ -1,6 +1,8 @@
 SpiderRoy
 self made Hexapod
+
 for current Info and Contact see 
+
 https://neuroplant.spdns.de/blog/category/roboter/
 
 # 	Intro
