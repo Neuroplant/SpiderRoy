@@ -1,5 +1,8 @@
 SpiderRoy
 self made Hexapod
+for current Info and Contact see 
+https://neuroplant.spdns.de/blog/category/roboter/
+
 # 	Intro
 
 Before assembling SpiderRoy and the servos it will be usefull to bring all Servos to middle position.
