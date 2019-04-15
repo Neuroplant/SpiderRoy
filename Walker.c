@@ -67,7 +67,7 @@ void *ServoThread (void *value) {
 	}
 	pthread_exit(NULL);
 }
-void *DisplayThrad (void *value) {
+void *DisplayThread (void *value) {
 	while(run) {
 		system(clrscr);
 		for (int i=0;i<=27;i++) {
