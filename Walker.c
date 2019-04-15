@@ -206,5 +206,5 @@ int main(int argc, char* argv[]) {
 	}
 	return 0;
 }
-#include LegPos.sub
-#include move.sub
+#include "LegPos.sub"
+#include "move.sub"
