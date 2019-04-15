@@ -74,10 +74,10 @@ void *DisplayThread (void *value) {
 			printf("\n");
 			for (int j=0;j<21;j++) {
 				if 	(Servo[j].min==i) {	printf("-"); }
-				else {if Servo[j].max==i) {	printf("-"); }
-				else {if Servo[j].neu==i) {	printf("x"); }
-				else {if Servo[j].alt==i) {	printf("x"); }
-				else {if Servo[j].current==i) {	printf("o"); }
+				else {if (Servo[j].max==i) {	printf("-"); }
+				else {if (Servo[j].neu==i) {	printf("x"); }
+				else {if (Servo[j].alt==i) {	printf("x"); }
+				else {if (Servo[j].current==i) {	printf("o"); }
 				else {printf(" ");      
 				}}}}}
 			}
