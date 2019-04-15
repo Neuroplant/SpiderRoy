@@ -69,7 +69,7 @@ void *ServoThread (void *value) {
 }
 void *DisplayThread (void *value) {
 	while(run) {
-		system(clrscr);
+		system("clrscr");
 		for (int i=0;i<=27;i++) {
 			printf("\n");
 			for (int j=0;j<21;j++) {
